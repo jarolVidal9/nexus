@@ -1,0 +1,72 @@
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; box-sizing: border-box;" class="bg-base-300">
+    <div class="bg-base-300 shadow-2xl rounded-lg p-8 w-full max-w-lg">
+        <p class="font-bold text-3xl text-center pb-8">Registro</p>
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="flex flex-col gap-4">
+            
+            <div class="form-control w-full">
+                <label class="label" for="name">
+                    <span class="label-text">Nombre:</span>
+                </label>
+                <input type="text" id="name" name="name" formControlName="name" class="input input-bordered w-full" required />
+                <span class="label-text-alt text-red-500">
+                    @if(registerForm.get('name')?.touched){
+                        {{ registerForm.get('name')?.errors?.['required'] ? 'Por favor, ingresa tu nombre.' : '' }}
+                        {{ registerForm.get('name')?.errors?.['minlength'] ? 'El nombre debe tener al menos 3 caracteres.' : '' }}
+                    }
+                </span>
+            </div>
+            <div class="form-control w-full mt-2">
+                <label class="label" for="email">
+                    <span class="label-text">Email:</span>
+                </label>
+                <input type="email" id="email" name="email" formControlName="email" class="input input-bordered w-full" required />
+                <span class="label-text-alt text-red-500">
+                    @if (registerForm.get('email')?.touched) {
+                        {{ registerForm.get('email')?.errors?.['required'] ? 'Por favor, ingresa tu correo electrónico.' : '' }}
+                        {{ registerForm.get('email')?.errors?.['email'] ? 'El formato del correo electrónico no es válido.' : '' }}
+                    }
+                </span>
+            </div>
+            <div class="form-control w-full mt-2">
+                <label class="label" for="password">
+                    <span class="label-text">Contraseña:</span>
+                </label>
+                <input type="password" id="password" name="password" formControlName="password" class="input input-bordered w-full" required />
+                <span class="label-text-alt text-red-500">
+                    @if (registerForm.get('password')?.touched) {
+                        {{ registerForm.get('password')?.errors?.['required'] ? 'Por favor, ingresa una contraseña.' : '' }}
+                        {{ registerForm.get('password')?.errors?.['minlength'] ? 'La contraseña debe tener al menos 6 caracteres.' : '' }}
+                    }
+                </span>
+            </div>
+            <div class="form-control w-full mt-2">
+                <label class="label" for="confirmPassword">
+                    <span class="label-text">Confirmar Contraseña:</span>
+                </label>
+                <input type="password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" class="input input-bordered w-full" required />
+                <span class="label-text-alt text-red-500">
+                    @if (registerForm.get('confirmPassword')?.touched) {
+                        {{ registerForm.get('confirmPassword')?.errors?.['required'] ? 'Por favor, confirma tu contraseña.' : '' }}
+                        {{ registerForm.get('confirmPassword')?.errors?.['minlength'] ? 'La contraseña debe tener al menos 6 caracteres.' : '' }}
+                        {{ registerForm.hasError('passwordMismatch')? 'Las contraseñas no coinciden. Por favor, verifica.' : '' }}
+                    }
+                </span>
+            </div>
+            @if (error()) {
+                <ul>
+                    @for (err of errorsMessage(); track $index) {
+                    <li>
+                        <p class="text-red-500 text-sm">{{ err.msg }}</p>
+                    </li>
+                    }
+                </ul>
+            }
+            <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary mt-6 w-full">Registrar</button>
+            <div class="flex justify-between items-center mt-4">
+                <p class="text-sm">¿Ya tienes cuenta? 
+                    <a routerLink="../login" class="text-blue-500">Iniciar Sesión</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

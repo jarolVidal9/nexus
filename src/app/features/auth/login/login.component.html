@@ -1,0 +1,49 @@
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; " class="bg-base-300">
+    <div class=" bg-base-300 shadow-2xl rounded-lg p-8 w-120">
+        <img src="assets/images/name.svg" alt="" class="w-2/4 max-w-sm mx-auto mb-2">
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="flex flex-col gap-4">
+            <div class="form-group">
+                <label for="email" class="font-semibold text-sm">Correo</label>
+                <input type="email" id="email" name="email" class="input w-full border border-gray-300 rounded-md p-2 mt-1" formControlName="email" />
+                <span class="text-xs text-red-500 mt-1 block">
+                    @if(loginForm.get('email')?.touched) {
+                    {{ loginForm.get('email')?.errors?.['required'] ? 'El correo es obligatorio' : '' }}
+                    {{ loginForm.get('email')?.errors?.['email'] ? 'Formato de correo inválido' : '' }}
+                    }
+                </span>
+            </div>
+
+            <div class="form-group mt-4">
+                <label for="password" class="font-semibold text-sm">Contraseña</label>
+                <input type="password" id="password" name="password" class="input w-full border border-gray-300 rounded-md p-2 mt-1" formControlName="password" />
+                <span class="text-xs text-red-500 mt-1 block">
+                    @if(loginForm.get('password')?.touched) {
+                    {{ loginForm.get('password')?.errors?.['required'] ? 'La contraseña es obligatoria' : '' }}
+                    {{ loginForm.get('password')?.errors?.['minlength'] ? 'La contraseña debe tener al menos 6 caracteres' : '' }}
+                    }
+                </span>
+            </div>
+
+            <div class="mt-4">
+                @if (error()) {
+                    @for (err of errorsMessage(); track $index) {
+                        <div role="alert" class="alert alert-error alert-soft p-2 rounded-md bg-red-100 text-red-700">
+                            <span>{{err.msg}}</span>
+                        </div>
+                    }
+                }
+            </div>
+            <button [disabled]="loginForm.invalid || loading()" type="submit" class="w-full btn btn-primary">
+                @if(loading()) {
+                <span class="loading loading-spinner loading-sm"></span>
+                }
+                Iniciar Sesión
+            </button>
+            <div class="flex justify-between items-center mt-4">
+                <p class="text-sm">¿No tienes cuenta? <a routerLink="../register" class="text-blue-500">Registrate</a></p>
+                <p class="text-sm"><a routerLink="auth/forgot-password" class="text-blue-500">¿Olvidaste tu
+                        contraseña?</a></p>
+            </div>
+        </form>
+    </div>
+</div>
