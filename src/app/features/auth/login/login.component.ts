@@ -32,14 +32,13 @@ export class LoginComponent {
     });
   }
 
-  onLogin(): void {
+  onLogin(): void {   
     if (!this.loginForm.invalid) {
       this.loading.set(true);
       const loginData: LoginInterface = this.loginForm.value;
       this.authService.login(loginData).subscribe({
         next: () => {
           this.loading.set(false);
-          console.log('Login successful');
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
