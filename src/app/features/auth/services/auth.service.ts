@@ -32,4 +32,10 @@ export class AuthService {
   register(data: RegisterInterface){
     return this.http.post(`${this.apiUrl}/auth/register`, data);
   }
+  resetPassword(email: string){
+    return this.http.post(`${this.apiUrl}/auth/reset-password`, { email });
+  }
+  verifyResetPassword(token: string, password: string){
+    return this.http.post(`${this.apiUrl}/auth/reset-password/${token}`, { password });
+  }
 }

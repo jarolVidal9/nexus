@@ -41,9 +41,56 @@
             </button>
             <div class="flex justify-between items-center mt-4">
                 <p class="text-sm">¿No tienes cuenta? <a routerLink="../register" class="text-blue-500">Registrate</a></p>
-                <p class="text-sm"><a routerLink="auth/forgot-password" class="text-blue-500">¿Olvidaste tu
+                <p class="text-sm"><a onclick="my_modal_1.showModal()" class="text-blue-500 cursor-pointer">¿Olvidaste tu
                         contraseña?</a></p>
             </div>
         </form>
     </div>
 </div>
+<dialog id="my_modal_1" class="modal">
+<div class="modal-box">
+    <h3 class="text-lg font-bold">¿Olvidaste tu contraseña?</h3>
+    @if(!resetSent()){
+        <p class="py-4">Ingresa tu correo electrónico para restablecer tu contraseña.</p>
+        <form [formGroup]="resetPasswordForm" (ngSubmit)="onResetPassword()" class="flex flex-col gap-4">
+            <div class="form-group">
+                <label for="resetEmail" class="font-semibold text-sm">Correo</label>
+                <input type="email" id="resetEmail" name="resetEmail" class="input w-full border border-gray-300 rounded-md p-2 mt-1" formControlName="email" />
+                <span class="text-xs text-red-500 mt-1 block">
+                    @if(resetPasswordForm.get('email')?.touched) {
+                    {{ resetPasswordForm.get('email')?.errors?.['required'] ? 'El correo es obligatorio' : '' }}
+                    {{ resetPasswordForm.get('email')?.errors?.['email'] ? 'Formato de correo inválido' : '' }}
+                    }
+                </span>
+            </div>
+            @if(errorReset()) {
+                @for (err of errorMessageReset(); track $index) {
+                    <div role="alert" class="alert alert-error alert-soft p-2 rounded-md bg-red-100 text-red-700">
+                        <span>{{err.msg}}</span>
+                    </div>
+                }
+            }
+            <div class="modal-action">
+                <button type="submit" class="btn btn-primary" [disabled]="resetPasswordForm.invalid || loadingReset()">
+                    @if(loadingReset()) {
+                    <span class="loading loading-spinner loading-sm"></span>
+                    }
+                    Enviar
+                </button>
+                <form method="dialog">
+                  <button class="btn" (click)="clearForm()">Cerrar</button>
+                </form>
+            </div>
+        </form>
+    }@else{
+        <div class="text-center">
+            <p class="text-green-500 font-semibold">¡Correo enviado! Revisa tu bandeja de entrada.</p>
+            <div class="modal-action">
+                <form method="dialog">
+                    <button class="btn" (click)="clearForm()">Cerrar</button>
+                </form>
+            </div>
+        </div>
+    }
+</div>
+</dialog>

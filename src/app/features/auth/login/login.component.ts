@@ -17,8 +17,13 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  resetPasswordForm: FormGroup;
   error = signal(false);
   loading = signal(false);
+  loadingReset = signal(false);
+  resetSent = signal(false);
+  errorReset = signal(false);
+  errorMessageReset = signal<{ msg: string; path: string }[]>([]);
   errorsMessage = signal<{ msg: string; path: string }[]>([]);
 
   constructor(
@@ -29,6 +34,9 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+    this.resetPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -50,5 +58,31 @@ export class LoginComponent {
         },
       });
     }
+  }
+  onResetPassword(): void {
+    if(!this.resetPasswordForm.invalid){
+      this.loadingReset.set(true);
+      const email = this.resetPasswordForm.value.email;
+      this.authService.resetPassword(email).subscribe({
+        next: () => {
+          this.resetSent.set(true);
+          this.loadingReset.set(false);
+        },
+        error: (error) => {
+          this.loadingReset.set(false);
+          this.errorReset.set(true);
+          const errorReset = error?.error?.errors || [];
+          console.log('errorReset', errorReset);
+          
+          this.errorMessageReset.set(errorReset);
+        },
+      });
+    }
+  }
+  clearForm(): void {
+    this.resetPasswordForm.reset();
+    this.resetSent.set(false);
+    this.errorReset.set(false);
+    this.errorMessageReset.set([]);
   }
 }

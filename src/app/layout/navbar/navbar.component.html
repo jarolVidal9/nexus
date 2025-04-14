@@ -1,7 +1,7 @@
 <div class="navbar bg-base-100 shadow-sm">
     <div class="navbar-start">
         <div class="dropdown">
-            <div class="drawer">
+            <div class="drawer z-10" >
                 <input id="my-drawer" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content">
                     <!-- Page content here -->
@@ -14,13 +14,13 @@
                 </div>
                 <div class="drawer-side">
                     <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 z-50">
-                        <!-- Sidebar content here -->
-                        <li><a routerLink="/subject">🎯 Objetivos</a></li>
-                        <li><a>💰 Finanzas</a></li>
-                        <li><a>📓 Notas rápidas</a></li>
-                        <li><a>🗒️ Registro personal</a></li>
-                        <li><a>🔐 Privado</a></li>
+                    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                        <li><a routerLink="/dashboard">📊 Dashboard</a></li>
+                        <li><a routerLink="/goals">🎯 Objetivos</a></li>
+                        <li><a routerLink="/finance">💰 Finanzas</a></li>
+                        <li><a routerLink="/notes">📓 Notas rápidas</a></li>
+                        <li><a routerLink="/personal">🗒️ Registro personal</a></li>
+                        <li><a routerLink="/private">🔐 Privado</a></li>
                     </ul>
                 </div>
             </div>
