@@ -1,0 +1,153 @@
+@if(!loadingProfile()){
+    <div>
+        <form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()" class="flex flex-col gap-4"> 
+            <div class="flex flex-col items-center">
+                <div class="avatar">
+                    <div class="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
+                        <img 
+                            [src]="previewImg || profileImgPath || 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'" 
+                            class="w-full h-auto object-cover" 
+                            alt="Avatar" 
+                        />
+                    </div>
+                </div>
+                <input type="file" class="file-input mt-4" (change)="onFileSelected($event)" />
+            </div>
+            <div class="flex flex-col mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div >
+                        <label class="floating-label">
+                            <span>Nombre</span>
+                            <input type="text" placeholder="Nombre" class="input input-md w-full" formControlName="name" />
+                        </label>
+                        <span class="text-xs text-red-500 mt-1 block">
+                            @if(profileForm.get('name')?.touched) {
+                                {{ profileForm.get('name')?.errors?.['required'] ? 'El nombre es obligatorio' : '' }}
+                                {{ profileForm.get('name')?.errors?.['minlength'] ? 'El nombre debe tener al menos 3 caracteres' : '' }}
+                            }
+                        </span>
+                    </div>
+                    <div>
+                        <label class="floating-label">
+                            <span>Usuario</span>
+                            <input type="text" placeholder="Usuario" class="input input-md w-full" formControlName="username" />
+                        </label>
+                        <span class="text-xs text-red-500 mt-1 block">
+                            @if(profileForm.get('username')?.touched) {
+                                {{ profileForm.get('username')?.errors?.['minlength'] ? 'El usuario debe tener al menos 3 caracteres' : '' }}
+                            }
+                        </span>
+                    </div>
+                    <div>
+                        <label class="floating-label">
+                            <span>Email</span>
+                            <input type="email" placeholder="Email" class="input input-md w-full" formControlName="email"/>
+                        </label>
+                        <span class="text-xs text-red-500 mt-1 block">
+                            @if(profileForm.get('email')?.touched) {
+                                {{ profileForm.get('email')?.errors?.['email'] ? 'Formato de correo inválido' : '' }}
+                            }
+                        </span>
+                    </div>
+                    <div>
+                        <label class="floating-label">
+                            <span>Teléfono</span>
+                            <input type="tel" placeholder="Teléfono" class="input input-md w-full" formControlName="phone" />
+                        </label>
+                        <span class="text-xs text-red-500 mt-1 block">
+                            @if(profileForm.get('phone')?.touched) {
+                                {{ profileForm.get('phone')?.errors?.['pattern'] ? 'Formato de teléfono inválido' : '' }}
+                            }
+                        </span>
+                    </div>
+                    <div>
+                        <label class="floating-label">
+                            <span>Cumpleaños</span>
+                            <input type="date" placeholder="Cumpleaños" class="input input-md w-full" formControlName="birthday" />
+                        </label>
+                        <span class="text-xs text-red-500 mt-1 block">
+                            
+                        </span>
+                    </div>
+                    <div>
+                        <label class="floating-label">
+                            <span>Género</span>
+                            <select class="input input-md w-full" formControlName="gender">
+                                <option value="null" selected >Selecciona</option>
+                                <option value="hombre">Masculino</option>
+                                <option value="mujer">Femenino</option>
+                                <option value="otro">otro</option>
+                            </select>
+                        </label>
+                        <span class="text-xs text-red-500 mt-1 block">
+                            @if(profileForm.get('gender')?.touched){
+                                {{profileForm.get('gender')?.errors?.['pattern'] ? 'Formato de género inválido' : ''}}
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+            @if (error()) {
+                @for(err of errorMessage(); track $index) {
+                    <div role="alert" class="alert alert-error alert-soft p-2 rounded-md bg-red-100 text-red-700">
+                        <span>{{err.msg}}</span>
+                    </div>
+                }
+            }
+            @if (success()) {
+                <div role="alert" class="alert alert-success alert-soft p-2 rounded-md bg-green-100 text-green-700">
+                    <span>La informacion se ha actualizado correctamente </span>
+                </div>
+            }
+            <div class="flex justify-end mt-4">
+                <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid || !profileForm.dirty || loading()" >
+                    @if(loading()) {
+                        <span class="loading loading-spinner loading-sm"></span>
+                    }
+                    Guardar</button>
+            </div>
+        </form>
+    </div>
+}@else {
+    <div>
+        <div class="flex flex-col gap-4 animate-pulse">
+            <div class="flex flex-col items-center">
+                <div class="avatar">
+                    <div class="bg-gray-300 w-24 h-24 rounded-full mb-4"></div>
+                </div>
+                <div class="bg-gray-300 h-8 w-32 rounded"></div>
+            </div>
+            <div class="flex flex-col mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <div class="bg-gray-300 h-4 w-24 rounded"></div>
+                        <div class="bg-gray-200 h-10 w-full rounded"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-gray-300 h-4 w-24 rounded"></div>
+                        <div class="bg-gray-200 h-10 w-full rounded"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-gray-300 h-4 w-24 rounded"></div>
+                        <div class="bg-gray-200 h-10 w-full rounded"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-gray-300 h-4 w-24 rounded"></div>
+                        <div class="bg-gray-200 h-10 w-full rounded"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-gray-300 h-4 w-24 rounded"></div>
+                        <div class="bg-gray-200 h-10 w-full rounded"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-gray-300 h-4 w-24 rounded"></div>
+                        <div class="bg-gray-200 h-10 w-full rounded"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end mt-4">
+                <div class="bg-gray-300 h-10 w-32 rounded"></div>
+            </div>
+        </div>
+    </div>
+}

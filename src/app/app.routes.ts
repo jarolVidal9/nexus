@@ -11,6 +11,7 @@ import { PersonalComponent } from './features/personal/personal.component';
 import { PrivateComponent } from './features/private/private.component';
 import { redirectIfAuthenticatedGuard } from './core/guards/redirect-if-authenticated.guard';
 import { ResetpasswordComponent } from './features/auth/resetpassword/resetpassword.component';
+import { ProfileComponent } from './features/profile/profile/profile.component';
 
 export const routes: Routes = [
     {
@@ -57,6 +58,11 @@ export const routes: Routes = [
         path: 'private',
         canActivate: [authGuard],
         component: PrivateComponent
+    },
+    {
+        path: 'profile',
+        canActivate: [authGuard],
+        component: ProfileComponent
     },
     {
         path: '**',

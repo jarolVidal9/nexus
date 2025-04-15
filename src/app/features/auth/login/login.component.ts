@@ -8,6 +8,8 @@ import {
 import { LoginInterface } from '../interfaces/login.interface';
 import { AuthService } from '../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { ProfileSharedService } from '../../../core/services/profile-shared.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,7 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
+  apiUrl = environment.apiUrl;
   loginForm: FormGroup;
   resetPasswordForm: FormGroup;
   error = signal(false);
@@ -30,6 +33,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private profileSharedService: ProfileSharedService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -46,6 +50,11 @@ export class LoginComponent {
       const loginData: LoginInterface = this.loginForm.value;
       this.authService.login(loginData).subscribe({
         next: () => {
+          this.authService.userData().subscribe({
+            next: (userData:any) => {
+              this.profileSharedService.setProfileImage(this.apiUrl+ '/uploads/'+ userData.img);
+            }
+          });
           this.loading.set(false);
           this.router.navigate(['/dashboard']);
         },

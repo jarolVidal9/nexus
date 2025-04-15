@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { RegisterInterface } from '../interfaces/register.interface';
 import { Route, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
+import { Profile } from '../../profile/interfaces/profile';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,8 @@ export class AuthService {
   }
   verifyResetPassword(token: string, password: string){
     return this.http.post(`${this.apiUrl}/auth/reset-password/${token}`, { password });
+  }
+  userData(): Observable<any> {
+    return this.http.get<Profile>(`${this.apiUrl}/user`);
   }
 }
