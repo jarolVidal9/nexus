@@ -5,7 +5,7 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 
 @Component({
   selector: 'app-profile',
-  imports: [NavbarComponent, PasswordComponent, UpdateProfileComponent],
+  imports: [ PasswordComponent, UpdateProfileComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })

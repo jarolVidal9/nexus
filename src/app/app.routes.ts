@@ -13,6 +13,7 @@ import { redirectIfAuthenticatedGuard } from './core/guards/redirect-if-authenti
 import { ResetpasswordComponent } from './features/auth/resetpassword/resetpassword.component';
 import { ProfileComponent } from './features/profile/profile/profile.component';
 import { NotFoundComponent } from './features/not-found/not-found.component';
+import { LayoutComponent } from './layout/layout/layout.component';
 
 export const routes: Routes = [
     {
@@ -35,39 +36,45 @@ export const routes: Routes = [
         component: ResetpasswordComponent
     },
     {
-        path: 'dashboard',
-        canActivate: [authGuard], 
-        component:DashboardComponent
-    },
-    {
-        path:'goals',
-        canActivate: [authGuard],
-        component: GoalsComponent
-    },
-    {
-        path: 'finance',
-        canActivate: [authGuard],
-        component: FinanceComponent
-    },
-    {
-        path: 'notes',
-        canActivate: [authGuard],
-        component: NotesComponent
-    },
-    {
-        path: 'personal',
-        canActivate: [authGuard],
-        component: PersonalComponent
-    },
-    {
-        path: 'private',
-        canActivate: [authGuard],
-        component: PrivateComponent
-    },
-    {
-        path: 'profile',
-        canActivate: [authGuard],
-        component: ProfileComponent
+        path: '',
+        component: LayoutComponent,
+        children:[
+            {
+                path: 'dashboard',
+                canActivate: [authGuard], 
+                component:DashboardComponent
+            },
+            {
+                path:'goals',
+                canActivate: [authGuard],
+                component: GoalsComponent
+            },
+            {
+                path: 'finance',
+                canActivate: [authGuard],
+                component: FinanceComponent
+            },
+            {
+                path: 'notes',
+                canActivate: [authGuard],
+                component: NotesComponent
+            },
+            {
+                path: 'personal',
+                canActivate: [authGuard],
+                component: PersonalComponent
+            },
+            {
+                path: 'private',
+                canActivate: [authGuard],
+                component: PrivateComponent
+            },
+            {
+                path: 'profile',
+                canActivate: [authGuard],
+                component: ProfileComponent
+            },
+        ]
     },
     {
         path: '**',

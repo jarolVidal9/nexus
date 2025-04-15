@@ -1,37 +1,5 @@
 <div class="navbar bg-base-100 shadow-sm mb-1">
     <div class="navbar-start">
-        <div class="dropdown">
-            <div class="drawer z-10" >
-                <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-                <div class="drawer-content">
-                    <!-- Page content here -->
-                    <label for="my-drawer" >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-                </svg>
-                    </label>
-                </div>
-                <div class="drawer-side">
-                    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                        <li><a routerLink="/dashboard">📊 Dashboard</a></li>
-                        <li><a routerLink="/goals">🎯 Objetivos</a></li>
-                        <li><a routerLink="/finance">💰 Finanzas</a></li>
-                        <li><a routerLink="/notes">📓 Notas rápidas</a></li>
-                        <li><a routerLink="/personal">🗒️ Registro personal</a></li>
-                        <li><a routerLink="/private">🔐 Privado</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="navbar-center">
-        <a routerLink="/dashboard">
-            <img class="w-30" src="assets/images/name.svg" alt="" />
-        </a>
-    </div>
-    <div class="navbar-end">
         <div>
             <label class="swap swap-rotate">
                 <input type="checkbox" class="" [value]="themeSave()" (click)="togleTheme()" />
@@ -51,6 +19,14 @@
                 </svg>
               </label>
         </div>
+    </div>
+    <a routerLink="/dashboard">
+        <img class="w-30" src="assets/images/name.svg" alt="" />
+    </a>
+    <div class="navbar-center">
+    </div>
+    <div class="navbar-end">
+        
         <div>
             <button class="btn btn-ghost btn-circle me-3">
                 <div class="indicator">
