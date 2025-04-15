@@ -12,8 +12,13 @@ import { PrivateComponent } from './features/private/private.component';
 import { redirectIfAuthenticatedGuard } from './core/guards/redirect-if-authenticated.guard';
 import { ResetpasswordComponent } from './features/auth/resetpassword/resetpassword.component';
 import { ProfileComponent } from './features/profile/profile/profile.component';
+import { NotFoundComponent } from './features/not-found/not-found.component';
 
 export const routes: Routes = [
+    {
+        path: '',
+        component:LandingpageComponent
+    },
     {
         path: 'auth/login',
         canActivate: [redirectIfAuthenticatedGuard],
@@ -66,6 +71,6 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        component:LandingpageComponent
+        component: NotFoundComponent
     },
 ];
