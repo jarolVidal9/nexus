@@ -1,128 +1,777 @@
-<div class="objectives-section p-6 bg-base-100 shadow-lg rounded-lg z-0">
+<div class="objectives-section px-2 bg-base-100 shadow-lg rounded-lg z-0">
     <h2 class="text-2xl font-bold mb-4">Objetivos</h2>
-    <div class="overflow-x-auto ">
+    <div class="overflow-x-auto pb-6">
         <div class="flex space-x-6">
             <!-- Category 1 -->
             <div class="min-w-[300px]">
                 <h3 class="text-xl font-semibold mb-4">Completed</h3>
                 <div class="space-y-4">
-                    <div class="card w-full bg-base-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="flex items-center">
-                                <img src="assets/images/dashboard.png" alt="Angular Basics" class="w-16 h-16 rounded-full mr-4">
-                                <div>
-                                    <h2 class="card-title text-success font-semibold">Learn Angular Basics</h2>
-                                    <p class="text-sm text-gray-600">Understand the fundamentals of Angular framework to build dynamic web applications.</p>
+                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
+                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
                                 </div>
                             </div>
-                            <div class="justify-end card-actions">
-                                <span class="badge badge-success">Completed</span>
-                            </div>
                         </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>$1'500.000</span>
+                            <span>$4'000.000</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            15/05/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
                     </div>
-                    <div class="card w-full bg-base-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="flex items-center">
-                                <img src="assets/images/dashboard.png" alt="TypeScript" class="w-16 h-16 rounded-full mr-4">
-                                <div>
-                                    <h2 class="card-title text-success font-semibold">Understand TypeScript</h2>
-                                    <p class="text-sm text-gray-600">Learn TypeScript to write strongly-typed JavaScript code for better maintainability.</p>
+                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
                                 </div>
                             </div>
-                            <div class="justify-end card-actions">
-                                <span class="badge badge-success">Completed</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
+                    </div>
+                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
+                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>10%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            30/09/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
+                    </div>
+                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Category 2 -->
             <div class="min-w-[300px]">
-                <h3 class="text-xl font-semibold mb-4">In Progress</h3>
+                <h3 class="text-xl font-semibold mb-4">Completed</h3>
                 <div class="space-y-4">
-                    <div class="card w-full bg-base-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="flex items-center">
-                                <img src="assets/images/dashboard.png" alt="Responsive UI" class="w-16 h-16 rounded-full mr-4">
-                                <div>
-                                    <h2 class="card-title text-error font-medium">Build a Responsive UI</h2>
-                                    <p class="text-sm text-gray-600">Design and implement a user interface that adapts to different screen sizes.</p>
+                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
                                 </div>
                             </div>
                         </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
                     </div>
-                    <div class="card w-full bg-base-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="flex items-center">
-                                <img src="assets/images/dashboard.png" alt="State Management" class="w-16 h-16 rounded-full mr-4">
-                                <div>
-                                    <h2 class="card-title text-error font-medium">Implement State Management</h2>
-                                    <p class="text-sm text-gray-600">Master state management techniques to handle complex application states effectively.</p>
+                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
+                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
                                 </div>
                             </div>
                         </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>$1'500.000</span>
+                            <span>$4'000.000</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            15/05/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
+                    </div>
+                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
+                    </div>
+                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
+                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>10%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            30/09/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Category 1 -->
+            <div class="min-w-[300px]">
+                <h3 class="text-xl font-semibold mb-4">Completed</h3>
+                <div class="space-y-4">
+                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
+                    </div>
+                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
+                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>10%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            30/09/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
+                    </div>
+                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
+                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>$1'500.000</span>
+                            <span>$4'000.000</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            15/05/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
+                    </div>
+                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+
+            <!-- Category 1 -->
+            <div class="min-w-[300px]">
+                <h3 class="text-xl font-semibold mb-4">Completed</h3>
+                <div class="space-y-4">
+                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
+                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>$1'500.000</span>
+                            <span>$4'000.000</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            15/05/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
+                    </div>
+                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
+                    </div>
+                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
+                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>10%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            30/09/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
+                    </div>
+                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Category 3 -->
+            <!-- Category 1 -->
             <div class="min-w-[300px]">
-                <h3 class="text-xl font-semibold mb-4">Upcoming</h3>
+                <h3 class="text-xl font-semibold mb-4">Completed</h3>
                 <div class="space-y-4">
-                    <div class="card w-full bg-base-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="flex items-center">
-                                <img src="assets/images/dashboard.png" alt="Testing" class="w-16 h-16 rounded-full mr-4">
-                                <div>
-                                    <h2 class="card-title text-warning font-medium">Learn Testing Strategies</h2>
-                                    <p class="text-sm text-gray-600">Understand how to write unit and integration tests to ensure code quality.</p>
+                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
+                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
                                 </div>
                             </div>
                         </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>$1'500.000</span>
+                            <span>$4'000.000</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            15/05/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
                     </div>
-                    <div class="card w-full bg-base-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="flex items-center">
-                                <img src="assets/images/dashboard.png" alt="Performance Optimization" class="w-16 h-16 rounded-full mr-4">
-                                <div>
-                                    <h2 class="card-title text-warning font-medium">Optimize Performance</h2>
-                                    <p class="text-sm text-gray-600">Learn techniques to improve the performance of web applications.</p>
+                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
                                 </div>
                             </div>
                         </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
+                    </div>
+                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
+                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>10%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            30/09/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
+                    </div>
+                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
+                        <div class="flex items-center gap-4 mb-3">
+                            <!-- No image here -->
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
+                                    <!-- No "Requiere dinero" -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>37%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            31/12/2024
+                        </div>
+                        <div class="flex gap-2 text-xs mb-2">
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
+                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                        </div>
+                        <p
+                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                            rows="2"
+                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Category 4 -->
-            <div class="min-w-[300px]">
-                <h3 class="text-xl font-semibold mb-4">Backlog</h3>
-                <div class="space-y-4">
-                    <div class="card w-full bg-base-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="flex items-center">
-                                <img src="assets/images/dashboard.png" alt="Security" class="w-16 h-16 rounded-full mr-4">
-                                <div>
-                                    <h2 class="card-title text-gray-500 font-medium">Enhance Security</h2>
-                                    <p class="text-sm text-gray-600">Learn best practices to secure web applications from vulnerabilities.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card w-full bg-base-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="flex items-center">
-                                <img src="assets/images/dashboard.png" alt="CI/CD" class="w-16 h-16 rounded-full mr-4">
-                                <div>
-                                    <h2 class="card-title text-gray-500 font-medium">Implement CI/CD</h2>
-                                    <p class="text-sm text-gray-600">Set up continuous integration and deployment pipelines for efficient development workflows.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>
+
+<!-- <div class="max-w-md bg-white rounded-2xl shadow-lg overflow-hidden m-10">
+    <div class="h-48 w-full bg-gray-200">
+      <img
+        src="assets/images/dashboard.png"
+        alt="Meta"
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="p-4 space-y-3">
+      <h2 class="text-2xl font-semibold text-gray-800">Mi meta es... Comprar una bicicleta nueva 🚲</h2>
+  
+      <div class="flex items-center justify-between text-sm text-gray-600">
+        <span class="flex items-center gap-1">
+            <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs">Alta</span>
+        </span>
+        <span>💰 Requiere dinero</span>
+      </div>
+  
+      <div>
+        <div class="flex justify-between text-sm font-medium text-gray-700">
+          <span>$1'500.000</span>
+          <span>$4'000.000</span>
+        </div>
+        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div class="h-full bg-blue-500" style="width: 37.5%"></div>
+        </div>
+      </div>
+  
+      <div class="flex items-center gap-2 text-sm text-gray-600">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        Fecha límite: 15/05/2024
+      </div>
+  
+      <div class="flex items-center gap-2 text-sm">
+        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">Salud</span>
+        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">Personal</span>
+        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">+</span>
+      </div>
+  
+      <textarea
+        placeholder="Notas o reflexiones..."
+        class="w-full mt-2 p-2 border border-gray-300 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
+        rows="3"
+      >Quiero lograr esta meta antes de que empiece la temporada de lluvias. También necesito buscar un lugar donde guardarla.</textarea>
+    </div>
+  </div> -->
+  
