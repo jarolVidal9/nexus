@@ -13,7 +13,6 @@ export class ProfileService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
   ) { }
 
   getProfile() : Observable<Profile> {

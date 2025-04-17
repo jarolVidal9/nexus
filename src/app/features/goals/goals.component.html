@@ -1,777 +1,257 @@
-<div class="objectives-section px-2 bg-base-100 shadow-lg rounded-lg z-0">
+<div class="objectives-section px-4 bg-base-100 rounded-lg z-0 h-max">
     <h2 class="text-2xl font-bold mb-4">Objetivos</h2>
-    <div class="overflow-x-auto pb-6">
-        <div class="flex space-x-6">
+    <div class="overflow-x-auto pb-6 ">
+        <div class="flex space-x-6 "  cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="drop($event)">
             <!-- Category 1 -->
-            <div class="min-w-[300px]">
-                <h3 class="text-xl font-semibold mb-4">Completed</h3>
-                <div class="space-y-4">
-                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
-                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
-                                </div>
-                            </div>
+             @for(category of categorysWithGoals(); track category.id) {
+                <div cdkDrag>
+                    <div class="min-w-[20rem] max-w-260  bg-base-200 p-2 rounded-2xl shadow-md">
+                        <div class="flex justify-between items-center mb-2" >
+                            <button class="p-1 rounded" title="Mover a la izquierda"  cdkDragHandle>
+                                <!-- Drag handle icon (dots) for drag and drop -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 cursor-move" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <circle cx="5" cy="7" r="1.5" fill="currentColor"/>
+                                    <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
+                                    <circle cx="5" cy="17" r="1.5" fill="currentColor"/>
+                                    <circle cx="12" cy="7" r="1.5" fill="currentColor"/>
+                                    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                                    <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
+                                    <circle cx="19" cy="7" r="1.5" fill="currentColor"/>
+                                    <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
+                                    <circle cx="19" cy="17" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </button>
+                            <h3 class="text-xl font-semibold p-1">{{ category.name}}</h3>
+                            <a class="p-1 rounded" title="Agregar" onclick="my_modal_2.showModal(2)" (click)="defineCategory(category.id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </a>
                         </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>$1'500.000</span>
-                            <span>$4'000.000</span>
+                        <div class="space-y-4">
+                            @for (goal of category.Goals; track goal.id) {
+                               <div class="max-w-md  bg-blue-200 rounded-xl shadow p-4 mx-auto">
+                                   <div class=" text-end ">
+                                       @switch (goal.state) {
+                                           @case ('nueva') {
+                                               <span class="bg-blue-500 text-white px-2 py-0.5 rounded-full text-xs">Nueva</span>
+                                           }
+                                           @case ('en proceso') {
+                                               <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">En proceso</span>
+                                           }
+                                           @case ('completada') {
+                                               <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Completada</span>
+                                           }
+                                           @case ('cancelada') {
+                                               <span class="bg-gray-400 text-white px-2 py-0.5 rounded-full text-xs">Cancelada</span>
+                                           }
+                                           @default {
+                                               <span class="bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full text-xs">Sin estado</span>
+                                           }
+                                       }
+                                   </div>
+                                   <div class="flex items-center gap-4 mb-3">
+                                       @if(goal.img){
+                                           <img [src]="goal.img" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                                       }
+                                       <div>
+                                           <h2 class="text-lg font-semibold text-gray-800">{{goal.title}}</h2>
+                                           <div class="flex items-center gap-2 mt-1">
+                                               @switch (goal.priority) {
+                                                   @case ('baja') {
+                                                       <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
+                                                   }
+                                                   @case ('media') {
+                                                       <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
+                                                   }
+                                                   @case ('alta') {
+                                                       <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
+                                                   }
+                                               }
+                                               <!-- <span class="text-xs text-gray-500">💰 Requiere dinero</span> -->
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="flex justify-between text-xs text-gray-600 mb-1">
+                                       <span>{{goal.progress}}</span>
+                                       <span>{{goal.objective}}</span>
+                                   </div>
+                                   <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                                   <div class="h-full bg-blue-500 rounded" [style.width]="goal.progress*100/goal.objective+'%'"></div>
+                                   </div>
+                                   <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                       </svg>
+                                       {{ goal.dueDate | date }}
+                                   </div>
+                                   <!-- <div class="flex gap-2 text-xs mb-2">
+                                       <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
+                                       <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                                   </div> -->
+                                   <p
+                                       class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
+                                       rows="2"
+                                   >{{goal.description}}</p>
+                               </div>
+                            }
+                            
                         </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            15/05/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
-                    </div>
-                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
-                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>10%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            30/09/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
-                    </div>
-                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
                     </div>
                 </div>
-            </div>
+             }
+             <div>
+                 <div class="min-w-[20rem] max-w-260 text-center bg-base-200 p-2 rounded-2xl shadow-md">
+                    @if(addGoalInput()){
+                        <input type="text" placeholder="Agregar objetivo" class="w-full p-2 border-none rounded text-sm resize-none focus:outline-none"
+                        #newGoalInput (keydown.enter)="saveGoal($event)" />
+                    }@else{
+                        <a class="flex flex-col items-center justify-center h-full" (click)="addGoal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </a>
+                    }
+                 </div>
+             </div>
 
-            <!-- Category 2 -->
-            <div class="min-w-[300px]">
-                <h3 class="text-xl font-semibold mb-4">Completed</h3>
-                <div class="space-y-4">
-                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
-                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>$1'500.000</span>
-                            <span>$4'000.000</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            15/05/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
-                    </div>
-                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
-                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>10%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            30/09/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
-                    </div>
-                    
-                </div>
-            </div>
-
-            <!-- Category 1 -->
-            <div class="min-w-[300px]">
-                <h3 class="text-xl font-semibold mb-4">Completed</h3>
-                <div class="space-y-4">
-                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
-                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>10%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            30/09/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
-                    </div>
-                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
-                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>$1'500.000</span>
-                            <span>$4'000.000</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            15/05/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
-                    </div>
-                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                    
-                    
-                </div>
-            </div>
-
-
-            <!-- Category 1 -->
-            <div class="min-w-[300px]">
-                <h3 class="text-xl font-semibold mb-4">Completed</h3>
-                <div class="space-y-4">
-                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
-                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>$1'500.000</span>
-                            <span>$4'000.000</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            15/05/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
-                    </div>
-                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
-                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>10%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            30/09/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
-                    </div>
-                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Category 1 -->
-            <div class="min-w-[300px]">
-                <h3 class="text-xl font-semibold mb-4">Completed</h3>
-                <div class="space-y-4">
-                    <div class="max-w-md bg-amber-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Comprar una bicicleta nueva 🚲</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Alta</span>
-                                    <span class="text-xs text-gray-500">💰 Requiere dinero</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>$1'500.000</span>
-                            <span>$4'000.000</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            15/05/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero lograr esta meta antes de que empiece la temporada de lluvias.</p>
-                    </div>
-                    <div class="max-w-md bg-blue-200 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                    <div class="max-w-md bg-cyan-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <img src="assets/images/dashboard.png" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Aprender a tocar guitarra 🎸</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">Baja</span>
-                                    <span class="text-xs text-gray-500">🎵 Requiere práctica</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>10%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 10%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            30/09/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Música</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Dedicar al menos 30 minutos diarios para practicar acordes y canciones básicas.</p>
-                    </div>
-                    <div class="max-w-md bg-emerald-100 rounded-xl shadow p-4 mx-auto">
-                        <div class="flex items-center gap-4 mb-3">
-                            <!-- No image here -->
-                            <div>
-                                <h2 class="text-lg font-semibold text-gray-800">Leer 12 libros este año 📚</h2>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Media</span>
-                                    <!-- No "Requiere dinero" -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>37%</span>
-                            <span>100%</span>
-                        </div>
-                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                            <div class="h-full bg-blue-500 rounded" style="width: 37.5%"></div>
-                        </div>
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            31/12/2024
-                        </div>
-                        <div class="flex gap-2 text-xs mb-2">
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Crecimiento</span>
-                            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                        </div>
-                        <p
-                            class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                            rows="2"
-                        >Quiero mejorar mi hábito de lectura y aprender cosas nuevas cada mes.</p>
-                    </div>
-                </div>
-            </div>
-            
         </div>
     </div>
 </div>
 
-<!-- <div class="max-w-md bg-white rounded-2xl shadow-lg overflow-hidden m-10">
-    <div class="h-48 w-full bg-gray-200">
-      <img
-        src="assets/images/dashboard.png"
-        alt="Meta"
-        class="w-full h-full object-cover"
-      />
-    </div>
-    <div class="p-4 space-y-3">
-      <h2 class="text-2xl font-semibold text-gray-800">Mi meta es... Comprar una bicicleta nueva 🚲</h2>
-  
-      <div class="flex items-center justify-between text-sm text-gray-600">
-        <span class="flex items-center gap-1">
-            <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs">Alta</span>
-        </span>
-        <span>💰 Requiere dinero</span>
-      </div>
-  
-      <div>
-        <div class="flex justify-between text-sm font-medium text-gray-700">
-          <span>$1'500.000</span>
-          <span>$4'000.000</span>
+
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="my_modal_2" class="modal">
+  <div class="modal-box p-0 rounded-2xl">
+    <form class="w-full rounded-sm shadow-lg overflow-hidden" [formGroup]="createGoalForm" (ngSubmit)="onSubmit()">
+        <!-- Imagen de la meta -->
+        <div class="h-48 w-full bg-gray-100 flex items-center justify-center relative group">
+            <label class="cursor-pointer flex flex-col items-center justify-center w-full h-full">
+                <input type="file" accept="image/*" class="hidden" />
+                <div class="flex flex-col items-center justify-center w-full h-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <rect x="3" y="5" width="18" height="14" rx="3" fill="#e5e7eb"/>
+                        <circle cx="8" cy="13" r="2" fill="#9ca3af"/>
+                        <path d="M21 19l-5.5-7-4.5 6-3-4-4 5" stroke="#9ca3af" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="text-gray-400 text-xs">Aquí aparecerá la imagen de tu meta</span>
+                </div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13h3l8-8a2.828 2.828 0 00-4-4l-8 8v3z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7l-1.5-1.5"/>
+                    </svg>
+                    <span class="text-white text-xs font-medium">Cambiar imagen</span>
+                </div>
+            </label>
         </div>
-        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div class="h-full bg-blue-500" style="width: 37.5%"></div>
+        <!-- Contenido del formulario -->
+        <div class="p-6 space-y-4">
+            <!-- Título -->
+            <input
+                type="text"
+                placeholder="¿Cuál es tu meta?"
+                formControlName="title"
+                class="w-full text-2xl font-bold text-gray-800 bg-transparent border-b-2 border-blue-200 focus:outline-none focus:border-blue-400 placeholder-gray-400"
+            />
+
+            <!-- Prioridad -->
+            <div class="flex items-center gap-3">
+                <label class="text-sm font-medium text-gray-600" >Prioridad:</label>
+                <select formControlName="priority"
+                    class="select select-xs px-3 py-1 rounded-full text-xs w-30"
+                >
+                    <option value="" disabled selected>Selecciona</option>
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
+                </select>
+            </div>
+
+            <!-- Avance y meta -->
+            <div>
+                <div class="flex flex-col gap-2 mb-2">
+                    <div class="flex gap-2">
+                        <div class="flex-1">
+                            <label class="text-xs text-gray-500 mb-1 block">Avance actual</label>
+                            <input
+                                formControlName="progress"
+                                type="number"
+                                min="0"
+                                placeholder="0"
+                                class="w-full input input-sm"
+                            />
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-xs text-gray-500 mb-1 block">Meta</label>
+                            <input
+                                formControlName="objective"
+                                type="number"
+                                min="1"
+                                placeholder="Meta"
+                                class="w-full input input-sm"
+                            />
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-xs text-gray-500 mb-1 block">Unidad</label>
+                            <input
+                                formControlName="unit"
+                                type="text"
+                                placeholder="Unidad"
+                                class="w-full input input-sm"
+                            />
+                        </div>
+                    </div>
+                    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden mt-1">
+                        <div
+                            class="h-full bg-blue-500 transition-all"
+                            style="width: 0%;"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fecha límite -->
+            <div class="flex items-center gap-2 text-sm text-gray-600">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <input
+                    formControlName="dueDate"
+                    type="date"
+                    class="input input-sm w-30"
+                />
+            </div>
+
+            <!-- Etiquetas -->
+            <div class="flex items-center gap-2 text-sm">
+                <input
+                    type="text"
+                    placeholder="Etiquetas (separadas por coma)"
+                    class="w-full bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs focus:outline-none"
+                />
+            </div>
+
+            <!-- Notas -->
+            <textarea
+                placeholder="Notas o descripción.."
+                class="w-full mt-2 p-2 border border-gray-300 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
+                rows="3"
+                formControlName="description"
+            ></textarea>
+
+            <!-- Botón guardar -->
+            <div class="flex justify-end pt-2">
+                <button type="submit" class="btn btn-primary px-6 py-2 rounded-lg shadow font-semibold text-white bg-blue-600 hover:bg-blue-700 transition">
+                    Guardar
+                </button>
+            </div>
         </div>
-      </div>
-  
-      <div class="flex items-center gap-2 text-sm text-gray-600">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-        </svg>
-        Fecha límite: 15/05/2024
-      </div>
-  
-      <div class="flex items-center gap-2 text-sm">
-        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">Salud</span>
-        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">Personal</span>
-        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">+</span>
-      </div>
-  
-      <textarea
-        placeholder="Notas o reflexiones..."
-        class="w-full mt-2 p-2 border border-gray-300 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
-        rows="3"
-      >Quiero lograr esta meta antes de que empiece la temporada de lluvias. También necesito buscar un lugar donde guardarla.</textarea>
-    </div>
-  </div> -->
-  
+    </form>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
