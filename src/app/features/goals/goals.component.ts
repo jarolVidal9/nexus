@@ -10,6 +10,10 @@ import {
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateEditComponent } from './create-edit/create-edit.component';
+import { Goal } from './interfaces/goal';
+import { FilesService } from '../../core/services/files.service';
 
 @Component({
   selector: 'app-goals',
@@ -21,11 +25,12 @@ export class GoalsComponent {
   categorysWithGoals = signal<Category[]>([]);
   addGoalInput = signal(false);
   createGoalForm : FormGroup;
-  goalCategoryId: string | null = null;
 
   constructor(
     private goalService: GoalService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private fileService: FilesService
   ){
     this.createGoalForm = this.fb.group(
       {
@@ -71,7 +76,7 @@ export class GoalsComponent {
     this.addGoalInput.set(!this.addGoalInput());
   }
 
-  saveGoal(event: Event){
+  saveCategory(event: Event){
     const input = event.target as HTMLInputElement;
     const value = input.value.trim();
     if (value) {
@@ -93,37 +98,67 @@ export class GoalsComponent {
     const clickeado = event.target as HTMLElement;
 
     if (this.newGoalInput && !this.newGoalInput.nativeElement.contains(clickeado)) {
-      console.log('Click fuera del input');
       this.addGoalInput.set(false);
       this.newGoalInput.nativeElement.value = ''; // Limpiar el input
     }
   }
-  defineCategory(categoryId: string){
-    this.goalCategoryId = categoryId;
+  saveGoal(categoryId: string){
+    const dialogRef = this.dialog.open(CreateEditComponent,{
+      data: {
+        categoryId: categoryId,
+      }
+    });
+    dialogRef.afterClosed().subscribe((goal: Goal) => {
+      if (goal) {
+        this.categorysWithGoals.update((prev) => {
+          const category = prev.find(cat => cat.id === categoryId);
+          if (category) {
+            category.Goals.push(goal);
+          }
+          return [...prev];
+        });
+      }
+    });
   }
-  onSubmit(){
-    const goalData = this.createGoalForm.value;
-    const goal = {
-      ...goalData,
-      goalCategoryId: this.goalCategoryId,
-      state: 'nueva', // Cambia esto por el estado que desees
-    }
-    if (this.goalCategoryId) {
-      this.goalService.createGoal(goal).subscribe({
-        next: (goal: any) => {
-          this.categorysWithGoals.update((prev) => {
-            const category = prev.find(cat => cat.id === this.goalCategoryId);
-            if (category) {
-              category.Goals.push(goal);
-            }
-            return [...prev];
-          });
-          this.createGoalForm.reset();
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      });
-    }
+  
+  deleteGoal(goalId: string, Event: MouseEvent){
+    Event.stopPropagation();
+    this.categorysWithGoals.update((prev) => {
+      const category = prev.find(cat => cat.Goals.some(goal => goal.id === goalId));
+      if (category) {
+        category.Goals = category.Goals.filter(goal => goal.id !== goalId);
+      }
+      return [...prev];
+    });
+    this.goalService.deleteGoal(goalId).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+  editGoal(goal: Goal, categoryId: string) {
+    const dialogRef = this.dialog.open(CreateEditComponent, {
+      data: {
+        goal: goal,
+        categoryId: categoryId
+      }
+    });
+    dialogRef.afterClosed().subscribe((updatedGoal: Goal) => {
+      if (updatedGoal) {
+        this.categorysWithGoals.update((prev) => {
+          const category = prev.find(cat => cat.id === categoryId);
+          if (category) {
+           const goal = category.Goals.findIndex(g => g.id === updatedGoal.id);
+          if (goal !== -1) category.Goals[goal] = updatedGoal;
+          }
+          return [...prev];
+        });
+      }
+    });
+  }
+  getImageUrl(img: string): string {
+    return this.fileService.getRouteImage(img);
   }
 }

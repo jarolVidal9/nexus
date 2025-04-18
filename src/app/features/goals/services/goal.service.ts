@@ -26,4 +26,10 @@ export class GoalService {
   createGoal(goal: Goal) {
     return this.http.post<Goal>(`${this.apiUrl}/goal`, goal);
   }
+  deleteGoal(id: string) {
+    return this.http.delete(`${this.apiUrl}/goal/${id}`);
+  }
+  editGoal(id: string, goal: Goal) {
+    return this.http.put<Goal>(`${this.apiUrl}/goal/${id}`, goal); 
+  }
 }

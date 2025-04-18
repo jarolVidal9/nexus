@@ -23,11 +23,6 @@ export class ProfileService {
     return this.http.put(`${this.apiUrl}/user`, data);
   }
 
-  uploadProfileImage(file: File) {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    return this.http.post(`${this.apiUrl}/upload`, formData);
-  }
   updatePassword(data: { password: string, newPassword: string }) {
     return this.http.put(`${this.apiUrl}/user/update-password`, data);
   }

@@ -1,11 +1,11 @@
-<div class="objectives-section px-4 bg-base-100 rounded-lg z-0 h-max">
+<div class="objectives-section px-4 bg-base-100 rounded-lg z-0">
     <h2 class="text-2xl font-bold mb-4">Objetivos</h2>
     <div class="overflow-x-auto pb-6 ">
         <div class="flex space-x-6 "  cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="drop($event)">
             <!-- Category 1 -->
              @for(category of categorysWithGoals(); track category.id) {
                 <div cdkDrag>
-                    <div class="min-w-[20rem] max-w-260  bg-base-200 p-2 rounded-2xl shadow-md">
+                    <div class="min-w-[20rem] max-w-260  bg-base-200 p-2 z-10 rounded-2xl shadow-md">
                         <div class="flex justify-between items-center mb-2" >
                             <button class="p-1 rounded" title="Mover a la izquierda"  cdkDragHandle>
                                 <!-- Drag handle icon (dots) for drag and drop -->
@@ -22,7 +22,7 @@
                                 </svg>
                             </button>
                             <h3 class="text-xl font-semibold p-1">{{ category.name}}</h3>
-                            <a class="p-1 rounded" title="Agregar" onclick="my_modal_2.showModal(2)" (click)="defineCategory(category.id)">
+                            <a class="p-1 rounded" title="Agregar" (click)="saveGoal(category.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                 </svg>
@@ -30,29 +30,36 @@
                         </div>
                         <div class="space-y-4">
                             @for (goal of category.Goals; track goal.id) {
-                               <div class="max-w-md  bg-blue-200 rounded-xl shadow p-4 mx-auto">
-                                   <div class=" text-end ">
-                                       @switch (goal.state) {
-                                           @case ('nueva') {
-                                               <span class="bg-blue-500 text-white px-2 py-0.5 rounded-full text-xs">Nueva</span>
+                               <div class="max-w-md bg-blue-200 rounded-xl shadow z-20 p-4 mx-auto" (click)="editGoal(goal, category.id)">
+                                   <div class="flex justify-between items-start">
+                                       <div class="text-end">
+                                           @switch (goal.state) {
+                                               @case ('nueva') {
+                                                   <span class="bg-blue-500 text-white px-2 py-0.5 rounded-full text-xs">Nueva</span>
+                                               }
+                                               @case ('en proceso') {
+                                                   <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">En proceso</span>
+                                               }
+                                               @case ('completada') {
+                                                   <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Completada</span>
+                                               }
+                                               @case ('cancelada') {
+                                                   <span class="bg-gray-400 text-white px-2 py-0.5 rounded-full text-xs">Cancelada</span>
+                                               }
+                                               @default {
+                                                   <span class="bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full text-xs">Sin estado</span>
+                                               }
                                            }
-                                           @case ('en proceso') {
-                                               <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">En proceso</span>
-                                           }
-                                           @case ('completada') {
-                                               <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Completada</span>
-                                           }
-                                           @case ('cancelada') {
-                                               <span class="bg-gray-400 text-white px-2 py-0.5 rounded-full text-xs">Cancelada</span>
-                                           }
-                                           @default {
-                                               <span class="bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full text-xs">Sin estado</span>
-                                           }
-                                       }
+                                       </div>
+                                       <button class="ml-2 z-30 p-1 rounded hover:bg-red-100" title="Eliminar" (click)="deleteGoal(goal.id, $event)">
+                                           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                           </svg>
+                                       </button>
                                    </div>
                                    <div class="flex items-center gap-4 mb-3">
                                        @if(goal.img){
-                                           <img [src]="goal.img" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                                           <img [src]="getImageUrl(goal.img)" alt="Meta" class="w-16 h-16 rounded object-cover" />
                                        }
                                        <div>
                                            <h2 class="text-lg font-semibold text-gray-800">{{goal.title}}</h2>
@@ -105,7 +112,7 @@
                  <div class="min-w-[20rem] max-w-260 text-center bg-base-200 p-2 rounded-2xl shadow-md">
                     @if(addGoalInput()){
                         <input type="text" placeholder="Agregar objetivo" class="w-full p-2 border-none rounded text-sm resize-none focus:outline-none"
-                        #newGoalInput (keydown.enter)="saveGoal($event)" />
+                        #newGoalInput (keydown.enter)="saveCategory($event)" />
                     }@else{
                         <a class="flex flex-col items-center justify-center h-full" (click)="addGoal()">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -120,138 +127,3 @@
     </div>
 </div>
 
-
-<!-- Open the modal using ID.showModal() method -->
-<dialog id="my_modal_2" class="modal">
-  <div class="modal-box p-0 rounded-2xl">
-    <form class="w-full rounded-sm shadow-lg overflow-hidden" [formGroup]="createGoalForm" (ngSubmit)="onSubmit()">
-        <!-- Imagen de la meta -->
-        <div class="h-48 w-full bg-gray-100 flex items-center justify-center relative group">
-            <label class="cursor-pointer flex flex-col items-center justify-center w-full h-full">
-                <input type="file" accept="image/*" class="hidden" />
-                <div class="flex flex-col items-center justify-center w-full h-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <rect x="3" y="5" width="18" height="14" rx="3" fill="#e5e7eb"/>
-                        <circle cx="8" cy="13" r="2" fill="#9ca3af"/>
-                        <path d="M21 19l-5.5-7-4.5 6-3-4-4 5" stroke="#9ca3af" stroke-width="2" fill="none"/>
-                    </svg>
-                    <span class="text-gray-400 text-xs">Aquí aparecerá la imagen de tu meta</span>
-                </div>
-                <div class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13h3l8-8a2.828 2.828 0 00-4-4l-8 8v3z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7l-1.5-1.5"/>
-                    </svg>
-                    <span class="text-white text-xs font-medium">Cambiar imagen</span>
-                </div>
-            </label>
-        </div>
-        <!-- Contenido del formulario -->
-        <div class="p-6 space-y-4">
-            <!-- Título -->
-            <input
-                type="text"
-                placeholder="¿Cuál es tu meta?"
-                formControlName="title"
-                class="w-full text-2xl font-bold text-gray-800 bg-transparent border-b-2 border-blue-200 focus:outline-none focus:border-blue-400 placeholder-gray-400"
-            />
-
-            <!-- Prioridad -->
-            <div class="flex items-center gap-3">
-                <label class="text-sm font-medium text-gray-600" >Prioridad:</label>
-                <select formControlName="priority"
-                    class="select select-xs px-3 py-1 rounded-full text-xs w-30"
-                >
-                    <option value="" disabled selected>Selecciona</option>
-                    <option value="alta">Alta</option>
-                    <option value="media">Media</option>
-                    <option value="baja">Baja</option>
-                </select>
-            </div>
-
-            <!-- Avance y meta -->
-            <div>
-                <div class="flex flex-col gap-2 mb-2">
-                    <div class="flex gap-2">
-                        <div class="flex-1">
-                            <label class="text-xs text-gray-500 mb-1 block">Avance actual</label>
-                            <input
-                                formControlName="progress"
-                                type="number"
-                                min="0"
-                                placeholder="0"
-                                class="w-full input input-sm"
-                            />
-                        </div>
-                        <div class="flex-1">
-                            <label class="text-xs text-gray-500 mb-1 block">Meta</label>
-                            <input
-                                formControlName="objective"
-                                type="number"
-                                min="1"
-                                placeholder="Meta"
-                                class="w-full input input-sm"
-                            />
-                        </div>
-                        <div class="flex-1">
-                            <label class="text-xs text-gray-500 mb-1 block">Unidad</label>
-                            <input
-                                formControlName="unit"
-                                type="text"
-                                placeholder="Unidad"
-                                class="w-full input input-sm"
-                            />
-                        </div>
-                    </div>
-                    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden mt-1">
-                        <div
-                            class="h-full bg-blue-500 transition-all"
-                            style="width: 0%;"
-                        ></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Fecha límite -->
-            <div class="flex items-center gap-2 text-sm text-gray-600">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
-                <input
-                    formControlName="dueDate"
-                    type="date"
-                    class="input input-sm w-30"
-                />
-            </div>
-
-            <!-- Etiquetas -->
-            <div class="flex items-center gap-2 text-sm">
-                <input
-                    type="text"
-                    placeholder="Etiquetas (separadas por coma)"
-                    class="w-full bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs focus:outline-none"
-                />
-            </div>
-
-            <!-- Notas -->
-            <textarea
-                placeholder="Notas o descripción.."
-                class="w-full mt-2 p-2 border border-gray-300 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
-                rows="3"
-                formControlName="description"
-            ></textarea>
-
-            <!-- Botón guardar -->
-            <div class="flex justify-end pt-2">
-                <button type="submit" class="btn btn-primary px-6 py-2 rounded-lg shadow font-semibold text-white bg-blue-600 hover:bg-blue-700 transition">
-                    Guardar
-                </button>
-            </div>
-        </div>
-    </form>
-  </div>
-  <form method="dialog" class="modal-backdrop">
-    <button>close</button>
-  </form>
-</dialog>

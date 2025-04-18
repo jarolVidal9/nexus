@@ -4,6 +4,7 @@ import { environment } from '../../../../../environments/environment';
 import { ProfileService } from '../../services/profile.service';
 import { ProfileSharedService } from '../../../../core/services/profile-shared.service';
 import { Profile } from '../../interfaces/profile';
+import { FilesService } from '../../../../core/services/files.service';
 
 
 @Component({
@@ -20,13 +21,14 @@ export class UpdateProfileComponent {
   error = signal(false);
   success = signal(false);
   errorMessage = signal<{ msg: string; path: string }[]>([]);
-  profileImgPath: string | null = null; // Initialize with null or a default image path
-  private apiUrl = environment.apiUrl;
+  previewImg = signal<string | ArrayBuffer | null>(null);
+  imgPath = signal<string | null>(null);
 
   constructor(
     private profileService: ProfileService,
     private fb: FormBuilder,
-    private profileSharedService: ProfileSharedService
+    private profileSharedService: ProfileSharedService,
+    private FileService: FilesService
   ){
     this.profileForm = this.fb.group({
       img: [''],
@@ -43,7 +45,7 @@ export class UpdateProfileComponent {
     this.loadingProfile.set(true);
     this.profileService.getProfile().subscribe({
       next: (profile: Profile) => {
-        this.profileImgPath = this.apiUrl + '/uploads/'+ profile.img;        
+        if(profile.img) this.imgPath.set(this.FileService.getRouteImage(profile.img)); 
         this.profileForm.patchValue({
           img: profile.img,
           username: profile.username,
@@ -74,12 +76,11 @@ export class UpdateProfileComponent {
       };
 
       if (this.selectedFile) {
-        this.profileService.uploadProfileImage(this.selectedFile).subscribe({
+        this.FileService.uploadFile(this.selectedFile).subscribe({
           next: (data: any) => {            
-            this.profileImgPath = this.apiUrl + '/uploads/'+ data.filename;
             profileData.img = data.filename; 
             this.updateProfile(profileData);
-            this.profileSharedService.setProfileImage(this.profileImgPath);         
+            this.profileSharedService.setProfileImage(this.FileService.getRouteImage(data.filename));         
           },
           error: (error) => {
             this.loading.set(false);
@@ -105,7 +106,6 @@ export class UpdateProfileComponent {
       }
     });
   }
-  previewImg: string | ArrayBuffer | null = null;
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -113,12 +113,11 @@ export class UpdateProfileComponent {
       const file = input.files[0];
       this.selectedFile = file;
   
-      this.profileForm.get('img')?.setValue(file.name); // solo para marcarlo como cambiado
+      this.profileForm.get('img')?.setValue(file.name);
       this.profileForm.get('img')?.markAsDirty();
   
-      // Si usas preview de imagen:
       const reader = new FileReader();
-      reader.onload = () => this.previewImg = reader.result as string;
+      reader.onload = () => this.previewImg.set(reader.result as string);
       reader.readAsDataURL(file);
     }
   }

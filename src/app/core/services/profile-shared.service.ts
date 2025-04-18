@@ -13,8 +13,6 @@ export class ProfileSharedService {
   }
 
   setProfileImage(url: string) {
-    console.log('url', url);
-    
     this.profileImageUrl.next(url);
     localStorage.setItem('profileImage', url);
   }
