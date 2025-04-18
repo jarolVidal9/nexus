@@ -110,6 +110,7 @@ export class UpdateProfileComponent {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
+      this.imgPath.set(null);
       const file = input.files[0];
       this.selectedFile = file;
   
