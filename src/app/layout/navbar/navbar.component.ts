@@ -29,7 +29,7 @@ export class NavbarComponent {
       this.themeSave.set(theme);
     }else{
       const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      this.themeSave.set(prefersDarkScheme ? 'night' : 'corporate');
+      this.themeSave.set(prefersDarkScheme ? 'dim' : 'corporate');
     }
   }
   logout(){
@@ -38,7 +38,7 @@ export class NavbarComponent {
   }
 
   togleTheme() {
-    const newTheme = this.themeSave() === 'corporate' ? 'night' : 'corporate';
+    const newTheme = this.themeSave() === 'corporate' ? 'dim' : 'corporate';
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     this.themeSave.set(newTheme);

@@ -9,7 +9,7 @@ import {
   CdkDropList,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateEditComponent } from './create-edit/create-edit.component';
 import { Goal } from './interfaces/goal';
@@ -25,6 +25,8 @@ export class GoalsComponent {
   categorysWithGoals = signal<Category[]>([]);
   addGoalInput = signal(false);
   createGoalForm : FormGroup;
+  loading = signal(true);
+  loadingCreateCategory = signal(false);
 
   constructor(
     private goalService: GoalService,
@@ -34,13 +36,14 @@ export class GoalsComponent {
   ){
     this.createGoalForm = this.fb.group(
       {
-        title: [''],
-        priority: [''],
-        progress: [''],
+        title: ['', [Validators.required]],
+        priority: ['',[Validators.required]],
+        progress: ['',],
         objective: [''],
         description: [''],
         unit: [''],
         dueDate: [''],
+        tags: [''],
       }
     )
   }
@@ -53,9 +56,11 @@ export class GoalsComponent {
     this.goalService.getGoals().subscribe({
       next: (categorys: Category[]) => {
         this.categorysWithGoals.set(categorys);
+        this.loading.set(false);
       },
       error: (error) => {
         console.error(error);
+        this.loading.set(false);
       }
     });
   }
@@ -77,6 +82,7 @@ export class GoalsComponent {
   }
 
   saveCategory(event: Event){
+    this.loadingCreateCategory.set(true);
     const input = event.target as HTMLInputElement;
     const value = input.value.trim();
     if (value) {
@@ -85,6 +91,7 @@ export class GoalsComponent {
           this.categorysWithGoals.update((prev) => [...prev, category]);
           this.addGoalInput.set(false);
           input.value = ''; 
+          this.loadingCreateCategory.set(false);
         },
         error: (error) => {
           console.error(error);
@@ -160,5 +167,18 @@ export class GoalsComponent {
   }
   getImageUrl(img: string): string {
     return this.fileService.getRouteImage(img);
+  }
+
+  deleteCategory(categoryId: string) {
+    this.categorysWithGoals.update((prev) => {
+      return prev.filter(cat => cat.id !== categoryId);
+    });
+    this.goalService.deleteGoalCategory(categoryId).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }

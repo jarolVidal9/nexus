@@ -1,129 +1,163 @@
-<div class="objectives-section px-4 bg-base-100 rounded-lg z-0">
-    <h2 class="text-2xl font-bold mb-4">Objetivos</h2>
-    <div class="overflow-x-auto pb-6 ">
-        <div class="flex space-x-6 "  cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="drop($event)">
-            <!-- Category 1 -->
-             @for(category of categorysWithGoals(); track category.id) {
-                <div cdkDrag>
-                    <div class="min-w-[20rem] max-w-260  bg-base-200 p-2 z-10 rounded-2xl shadow-md">
-                        <div class="flex justify-between items-center mb-2" >
-                            <button class="p-1 rounded" title="Mover a la izquierda"  cdkDragHandle>
-                                <!-- Drag handle icon (dots) for drag and drop -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 cursor-move" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <circle cx="5" cy="7" r="1.5" fill="currentColor"/>
-                                    <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
-                                    <circle cx="5" cy="17" r="1.5" fill="currentColor"/>
-                                    <circle cx="12" cy="7" r="1.5" fill="currentColor"/>
-                                    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
-                                    <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
-                                    <circle cx="19" cy="7" r="1.5" fill="currentColor"/>
-                                    <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
-                                    <circle cx="19" cy="17" r="1.5" fill="currentColor"/>
-                                </svg>
-                            </button>
-                            <h3 class="text-xl font-semibold p-1">{{ category.name}}</h3>
-                            <a class="p-1 rounded" title="Agregar" (click)="saveGoal(category.id)">
+@if(loading()){
+<div class="flex items-center justify-center h-96">
+    <span class="loading loading-spinner loading-lg text-primary"></span>
+</div>
+      
+}@else {
+    <div class="objectives-section px-4 bg-base-100 rounded-lg z-0 h-full pt-2" >
+        <div class="overflow-x-auto pb-6  h-full">
+            <div class="flex space-x-6 "  cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="drop($event)">
+                <!-- Category 1 -->
+                 @for(category of categorysWithGoals(); track category.id) {
+                    <div cdkDrag>
+                        <div class="min-w-[20rem] max-w-260 p-2 z-10 rounded-2xl shadow-md bg-base-300 ">
+                            <div class="flex justify-between items-center" >
+                                <button class="p-1 rounded" title="Mover a la izquierda" cdkDragHandle>
+                                    <!-- Drag handle icon (dots) for drag and drop -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 cursor-move" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <circle cx="5" cy="7" r="1.5" fill="currentColor"/>
+                                        <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
+                                        <circle cx="5" cy="17" r="1.5" fill="currentColor"/>
+                                        <circle cx="12" cy="7" r="1.5" fill="currentColor"/>
+                                        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                                        <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
+                                        <circle cx="19" cy="7" r="1.5" fill="currentColor"/>
+                                        <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
+                                        <circle cx="19" cy="17" r="1.5" fill="currentColor"/>
+                                    </svg>
+                                </button>
+                                <h3 class="text-lg  p-1">{{ category.name}}</h3>
+                                <div class="flex items-center gap-1">
+                                    @if(!category.Goals || category.Goals.length < 1){
+                                        <button class="p-1 rounded hover:bg-red-100" title="Eliminar categoría" (click)="deleteCategory(category.id)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                            </svg>
+                                        </button>
+                                    }
+                                    <a class="p-1 rounded" title="Agregar" (click)="saveGoal(category.id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                @for (goal of category.Goals; track goal.id) {
+                                   <div class="max-w-md bg-base-100 rounded-xl shadow z-20 p-3 mx-auto" (click)="editGoal(goal, category.id)">
+                                       <div class="flex justify-between items-start mb-3">
+                                        <!-- <button class="rounded" title="Mover a la izquierda">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 cursor-move" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <circle cx="5" cy="7" r="1.5" fill="currentColor"/>
+                                                <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
+                                                <circle cx="5" cy="17" r="1.5" fill="currentColor"/>
+                                                <circle cx="12" cy="7" r="1.5" fill="currentColor"/>
+                                                <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                                                <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
+                                                <circle cx="19" cy="7" r="1.5" fill="currentColor"/>
+                                                <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
+                                                <circle cx="19" cy="17" r="1.5" fill="currentColor"/>
+                                            </svg>
+                                        </button> -->
+                                           <div class="text-end">
+                                               @switch (goal.state) {
+                                                   @case ('proceso') {
+                                                       <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">En proceso</span>
+                                                   }
+                                                   @case ('completada') {
+                                                       <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Completada</span>
+                                                   }
+                                                   
+                                                   @case ('vencida') {
+                                                        <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">Vencida</span>
+                                                   }
+                                                   @default {
+                                                       <span class="bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full text-xs">Sin estado</span>
+                                                   }
+                                               }
+                                           </div>
+                                           <button class="ml-2 z-30 p-1 rounded hover:bg-red-100" title="Eliminar" (click)="deleteGoal(goal.id, $event)">
+                                               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                               </svg>
+                                           </button>
+                                       </div>
+                                       <div class="flex items-center gap-4 mb-2">
+                                           @if(goal.img){
+                                               <img [src]="getImageUrl(goal.img)" alt="Meta" class="w-16 h-16 rounded object-cover" />
+                                           }
+                                           <div>
+                                               <h2 class="text-lg font-semibold ">{{goal.title}}</h2>
+                                               <div class="flex items-center gap-2 mt-1">
+                                                   @switch (goal.priority) {
+                                                       @case ('baja') {
+                                                           <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
+                                                       }
+                                                       @case ('media') {
+                                                           <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
+                                                       }
+                                                       @case ('alta') {
+                                                           <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
+                                                       }
+                                                   }
+                                                   <!-- <span class="text-xs text-gray-500">💰 Requiere dinero</span> -->
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="flex justify-between text-xs  mb-1">
+                                           <span>{{goal.progress}}</span>
+                                           <span>{{goal.objective}} {{goal.unit}}</span>
+                                       </div>
+                                       @if(goal.objective > 0){
+                                        <div class="w-full h-2 bg-gray-200 rounded mb-2">
+                                           <div class="h-full bg-green-500 rounded" [style.width]="goal.progress*100/goal.objective+'%'"></div>
+                                        </div>
+                                        }
+                                       <div class="flex items-center gap-2 text-xs  mb-2">
+                                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                           </svg>
+                                           {{ goal.dueDate | date }}
+                                       </div>
+                                       <!-- <div class="flex gap-2 text-xs mb-2">
+                                           <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
+                                           <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
+                                       </div> -->
+                                       @if(goal.description){
+                                           <p
+                                               class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none"
+                                               rows="2"
+                                           >{{goal.description}}</p>
+                                       }
+                                   </div>
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                 }
+                 <div>
+                     <div class="min-w-[20rem] max-w-260 text-center bg-base-200 p-2 rounded-2xl shadow-md">
+                        @if(addGoalInput()){
+                            @if(loadingCreateCategory()){
+                                <span class="loading loading-spinner loading-lg text-primary "></span>
+                            }@else {
+                                <input type="text" placeholder="Agregar objetivo" class="w-full p-2 border-none rounded text-sm resize-none focus:outline-none"
+                                #newGoalInput (keydown.enter)="saveCategory($event)" />
+                            }
+                        }@else{
+                            <a class="flex flex-col items-center justify-center h-full" (click)="addGoal()">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                 </svg>
                             </a>
-                        </div>
-                        <div class="space-y-4">
-                            @for (goal of category.Goals; track goal.id) {
-                               <div class="max-w-md bg-blue-200 rounded-xl shadow z-20 p-4 mx-auto" (click)="editGoal(goal, category.id)">
-                                   <div class="flex justify-between items-start">
-                                       <div class="text-end">
-                                           @switch (goal.state) {
-                                               @case ('nueva') {
-                                                   <span class="bg-blue-500 text-white px-2 py-0.5 rounded-full text-xs">Nueva</span>
-                                               }
-                                               @case ('en proceso') {
-                                                   <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">En proceso</span>
-                                               }
-                                               @case ('completada') {
-                                                   <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">Completada</span>
-                                               }
-                                               @case ('cancelada') {
-                                                   <span class="bg-gray-400 text-white px-2 py-0.5 rounded-full text-xs">Cancelada</span>
-                                               }
-                                               @default {
-                                                   <span class="bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full text-xs">Sin estado</span>
-                                               }
-                                           }
-                                       </div>
-                                       <button class="ml-2 z-30 p-1 rounded hover:bg-red-100" title="Eliminar" (click)="deleteGoal(goal.id, $event)">
-                                           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                           </svg>
-                                       </button>
-                                   </div>
-                                   <div class="flex items-center gap-4 mb-3">
-                                       @if(goal.img){
-                                           <img [src]="getImageUrl(goal.img)" alt="Meta" class="w-16 h-16 rounded object-cover" />
-                                       }
-                                       <div>
-                                           <h2 class="text-lg font-semibold text-gray-800">{{goal.title}}</h2>
-                                           <div class="flex items-center gap-2 mt-1">
-                                               @switch (goal.priority) {
-                                                   @case ('baja') {
-                                                       <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
-                                                   }
-                                                   @case ('media') {
-                                                       <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
-                                                   }
-                                                   @case ('alta') {
-                                                       <span class="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs">{{goal.priority | titlecase}}</span>
-                                                   }
-                                               }
-                                               <!-- <span class="text-xs text-gray-500">💰 Requiere dinero</span> -->
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="flex justify-between text-xs text-gray-600 mb-1">
-                                       <span>{{goal.progress}}</span>
-                                       <span>{{goal.objective}}</span>
-                                   </div>
-                                   <div class="w-full h-2 bg-gray-200 rounded mb-2">
-                                   <div class="h-full bg-blue-500 rounded" [style.width]="goal.progress*100/goal.objective+'%'"></div>
-                                   </div>
-                                   <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                       </svg>
-                                       {{ goal.dueDate | date }}
-                                   </div>
-                                   <!-- <div class="flex gap-2 text-xs mb-2">
-                                       <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Salud</span>
-                                       <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Personal</span>
-                                   </div> -->
-                                   <p
-                                       class="w-full p-2 border border-gray-200 rounded text-xs resize-none focus:outline-none text-black"
-                                       rows="2"
-                                   >{{goal.description}}</p>
-                               </div>
-                            }
-                            
-                        </div>
-                    </div>
-                </div>
-             }
-             <div>
-                 <div class="min-w-[20rem] max-w-260 text-center bg-base-200 p-2 rounded-2xl shadow-md">
-                    @if(addGoalInput()){
-                        <input type="text" placeholder="Agregar objetivo" class="w-full p-2 border-none rounded text-sm resize-none focus:outline-none"
-                        #newGoalInput (keydown.enter)="saveCategory($event)" />
-                    }@else{
-                        <a class="flex flex-col items-center justify-center h-full" (click)="addGoal()">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
-                        </a>
-                    }
+                        }
+                     </div>
                  </div>
-             </div>
-
+    
+            </div>
         </div>
     </div>
-</div>
+}
 

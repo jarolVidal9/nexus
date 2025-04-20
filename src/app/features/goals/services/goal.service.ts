@@ -32,4 +32,7 @@ export class GoalService {
   editGoal(id: string, goal: Goal) {
     return this.http.put<Goal>(`${this.apiUrl}/goal/${id}`, goal); 
   }
+  deleteGoalCategory(id: string) {
+    return this.http.delete(`${this.apiUrl}/goalCategory/${id}`);
+  }
 }

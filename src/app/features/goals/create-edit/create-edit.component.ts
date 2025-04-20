@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GoalService } from '../services/goal.service';
 import { FilesService } from '../../../core/services/files.service';
 import { Goal } from '../interfaces/goal';
@@ -19,6 +19,7 @@ export class CreateEditComponent {
   previewImg = signal<string | ArrayBuffer | null>(null);
   selectedFile: File | null = null;
   imgPath = signal<string | null>(null);
+  errorMessages= signal<{ msg: string; path: string }[]>([]);
 
   constructor(
     private dialog: MatDialogRef<CreateEditComponent>,
@@ -29,16 +30,50 @@ export class CreateEditComponent {
   ) { 
     this.createGoalForm = this.fb.group(
       {
-        title: [''],
-        img:[''],
-        priority: [''],
-        progress: [''],
-        objective: [''],
-        description: [''],
-        unit: [''],
-        dueDate: [''],
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      img: [''],
+      priority: ['', [Validators.required]],
+      progress: [null],
+      objective: [null],
+      description: ['', [Validators.maxLength(250)]],
+      unit: ['', [Validators.minLength(1), Validators.maxLength(10)]],
+      dueDate: ['', [Validators.required, this.futureDateValidator()]],
+      state: [''],
+      },
+      { validators: this.progressLessThanObjectiveValidator() }
+    );
+  }
+  progressLessThanObjectiveValidator() {
+    return (group: import('@angular/forms').AbstractControl) => {
+      const progress = group.get('progress')?.value;
+      const objective = group.get('objective')?.value;
+      if (
+        progress !== null &&
+        progress !== undefined &&
+        objective !== null &&
+        objective !== undefined &&
+        progress !== 0 &&
+        objective !== 0 &&
+        progress > objective
+      ) {
+        return { progress: 'El progreso no puede ser mayor al objetivo' };
       }
-    )
+      return null;
+    };
+  }
+
+  futureDateValidator() {
+    return (control: import('@angular/forms').AbstractControl) => {
+      const value = control.value;
+      if (!value) return null;
+      const inputDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (inputDate <= today) {
+        return { date: 'La fecha debe ser mayor a la actual' };
+      }
+      return null;
+    };
   }
   ngOnInit(){
     console.log(this.data.goal);
@@ -55,6 +90,7 @@ export class CreateEditComponent {
         description: this.data.goal.description,
         unit: this.data.goal.unit,
         dueDate: this.data.goal.dueDate,
+        state: this.data.goal.state,
       });
     }
   }
@@ -79,7 +115,7 @@ export class CreateEditComponent {
     const goal = {
       ...goalData,
       goalCategoryId: this.data.categoryId,
-      state: 'nueva', // Cambia esto por el estado que desees
+      state: 'proceso', // Cambia esto por el estado que desees
     }
     if (this.data.categoryId) {
       this.goalService.createGoal(goal).subscribe({
@@ -87,20 +123,45 @@ export class CreateEditComponent {
           this.loading.set(false);
           this.createGoalForm.reset();
           this.dialog.close(goalResponse);
+          this.errorMessages.set([]); // Limpiar los mensajes de error
         },
         error: (error) => {
           console.error(error);
+          const errors = error?.error?.errors || [];
+          this.errorMessages.set(errors);
+          this.loading.set(false);
         }
       });
     }
   }
   editGoal() {
     const goalData = this.createGoalForm.value;
+    // Validar si progress es igual a objective o menor
+    if (
+      goalData.progress !== null &&
+      goalData.progress !== undefined &&
+      goalData.objective !== null &&
+      goalData.objective !== undefined
+    ) {
+      if (goalData.progress === goalData.objective) {
+        goalData.state = 'completada';
+      } else if (goalData.progress < goalData.objective) {
+        goalData.state = 'proceso';
+      }
+    }
+
+    // Si la imagen fue eliminada (img vacío y no hay archivo seleccionado)
+    if (!goalData.img && !this.selectedFile) {
+      goalData.img = null;
+      this.updateGoal(goalData);
+      return;
+    }
+
     if (this.selectedFile) {
       this.loading.set(true);
       this.fileService.uploadFile(this.selectedFile).subscribe({
         next: (data: { message: string, filename: string, path: string }) => {
-          goalData.img = data.filename; // Asigna el nombre del archivo guardado al campo img
+          goalData.img = data.filename;
           this.updateGoal(goalData);
         },
         error: (error) => {
@@ -109,7 +170,7 @@ export class CreateEditComponent {
         }
       });
     } else {
-      goalData.img = this.data.goal.img; // Mantiene el valor original si no se seleccionó un nuevo archivo
+      goalData.img = this.data.goal.img;
       this.updateGoal(goalData);
     }
   }
@@ -120,9 +181,12 @@ export class CreateEditComponent {
       this.loading.set(false);
       this.createGoalForm.reset();
       this.dialog.close(goal); // Emitir el goal como un objeto
+      this.errorMessages.set([]); // Limpiar los mensajes de error
       },
       error: (error) => {
       console.error(error);
+      const errors = error?.error?.errors || [];
+      this.errorMessages.set(errors);
       this.loading.set(false);
       }
     });
@@ -152,5 +216,11 @@ export class CreateEditComponent {
       reader.readAsDataURL(file);
     }
   }
-  
+  removeImage(){
+    this.createGoalForm.get('img')?.markAsDirty();
+    this.imgPath.set(null);
+    this.previewImg.set(null);
+    this.selectedFile = null;
+    this.createGoalForm.get('img')?.setValue(''); // Limpiar el valor del campo img en el formulario
+  }
 }

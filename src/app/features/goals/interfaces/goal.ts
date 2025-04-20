@@ -7,7 +7,7 @@ export interface Goal {
     dueDate: Date;
     order: number;
     priority: 'baja' | 'media' | 'alta';
-    state: 'nueva' | 'en proceso' | 'completada' | 'cancelada';
+    state:  'proceso' | 'completada'| 'vencida';
     progress: number;
     objective: number;
     unit: string

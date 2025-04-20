@@ -160,7 +160,7 @@
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
         <img 
-                [src]="previewImg || imgPath || 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'" 
+                [src]="previewImg() || imgPath()" 
                 class="w-full h-auto object-cover p-3 rounded-2xl" 
                 alt="Avatar" 
             />
