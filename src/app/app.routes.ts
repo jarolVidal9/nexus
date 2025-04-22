@@ -18,22 +18,22 @@ import { LayoutComponent } from './layout/layout/layout.component';
 export const routes: Routes = [
     {
         path: '',
-        component:LandingpageComponent
+        loadComponent: () => import('./features/landing/landingpage/landingpage.component').then(m => m.LandingpageComponent),
     },
     {
         path: 'auth/login',
         canActivate: [redirectIfAuthenticatedGuard],
-        component: LoginComponent
+        loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent),
     },
     {
         path: 'auth/register',
         canActivate: [redirectIfAuthenticatedGuard],
-        component: RegisterComponent
+        loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent),
     },
     {
         path: 'reset-password/:token',
         canActivate:[redirectIfAuthenticatedGuard],
-        component: ResetpasswordComponent
+        loadComponent: () => import('./features/auth/resetpassword/resetpassword.component').then(m => m.ResetpasswordComponent),
     },
     {
         path: '',
@@ -42,37 +42,36 @@ export const routes: Routes = [
             {
                 path: 'dashboard',
                 canActivate: [authGuard], 
-                component:DashboardComponent
+                loadComponent: () => import('./features/dashboard/dashboard/dashboard.component').then(m => m.DashboardComponent),
             },
             {
                 path:'goals',
                 canActivate: [authGuard],
-                component: GoalsComponent
+                loadComponent: () => import('./features/goals/goals.component').then(m => m.GoalsComponent),
             },
             {
                 path: 'finance',
                 canActivate: [authGuard],
-                component: FinanceComponent
+                loadComponent: () => import('./features/finance/finance.component').then(m => m.FinanceComponent),
             },
             {
                 path: 'notes',
                 canActivate: [authGuard],
-                component: NotesComponent
+                loadComponent: () => import('./features/notes/notes.component').then(m => m.NotesComponent),
             },
             {
                 path: 'personal',
                 canActivate: [authGuard],
-                component: PersonalComponent
-            },
+                loadComponent: () => import('./features/personal/personal.component').then(m => m.PersonalComponent),},
             {
                 path: 'private',
                 canActivate: [authGuard],
-                component: PrivateComponent
+                loadComponent: () => import('./features/private/private.component').then(m => m.PrivateComponent),
             },
             {
                 path: 'profile',
                 canActivate: [authGuard],
-                component: ProfileComponent
+                loadComponent: () => import('./features/profile/profile/profile.component').then(m => m.ProfileComponent),
             },
         ]
     },
