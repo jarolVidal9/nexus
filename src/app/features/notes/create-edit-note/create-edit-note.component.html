@@ -1,0 +1,29 @@
+<form class="mx-auto bg-base-100 p-6 rounded-sm" [style.background]="selectedColor()" [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+    <!-- Título -->
+    <div class="mb-4">
+        <input id="title" name="title" type="text" placeholder="Título de la nota" formControlName="title"
+            class="w-full bg-transparent border-0 border-b-2 text-xl font-bold px-0 py-2 focus:outline-none text-black" />
+    </div>
+
+    <textarea name="" id="" >
+
+    </textarea>
+
+
+    <!-- Color -->
+    <div class="mb-4">
+        <div class="flex flex-wrap gap-2">
+            @for (color of colors; track $index) {
+            <span class="inline-block w-7 h-7 rounded-full border-2 cursor-pointer" [style.background]="color"
+                (click)="setColor(color)"></span>
+            }
+        </div>
+    </div>
+
+    <!-- Botón Guardar -->
+    <div class="flex justify-end">
+        <button type="submit" class="btn btn-primary px-5 py-2 rounded-lg font-bold shadow text-black">
+            Guardar
+        </button>
+    </div>
+</form>
