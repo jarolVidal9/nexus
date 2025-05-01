@@ -1,1 +1,111 @@
-<p>private works!</p>
+<div class="w-full mx-auto p-6  min-h-screen rounded-lg shadow">
+    <!-- Encabezado -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+      <h1 class="text-2xl font-bold">Secretos</h1>
+      <button onclick="my_modal_1.showModal()" class="btn btn-primary px-4 py-2 rounded-lg">+ Agregar</button>
+    </div>
+  
+    <!-- Buscador -->
+    <div class="relative mb-4">
+      <input type="text" placeholder="Buscar..." class="w-full border border-gray-300 rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <svg class="w-5 h-5 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 11A5.65 5.65 0 1 1 11 5.35a5.65 5.65 0 0 1 5.65 5.65z" />
+      </svg>
+    </div>
+  
+    <!-- Filtros -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm flex items-center gap-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16v12H4z"/></svg>
+        claves
+      </span>
+      <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">diario</span>
+      <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">personal</span>
+      <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">⭐ importantes</span>
+    </div>
+  
+    <!-- Lista de secretos -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Secreto individual -->
+      <div class="border border-gray-200 rounded-lg p-4 hover:shadow">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 gap-2">
+          <h2 class="font-semibold">Título secreto</h2>
+          <span class="text-sm text-gray-500">10 ago 2023</span>
+        </div>
+        <div class="flex flex-wrap gap-2 mb-1">
+          <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-xs flex items-center gap-1">🔑 claves</span>
+          <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-xs">personal</span>
+        </div>
+        <p class="text-sm ">Contraseña: 123456</p>
+        <p class="text-sm mt-1 flex items-center gap-1">
+          🔒 Sensibilidad: <span class="font-semibold text-red-600">Alta</span>
+        </p>
+      </div>
+  
+      <!-- Otro secreto -->
+      <div class="border border-gray-200 rounded-lg p-4 hover:shadow">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 gap-2">
+          <h2 class="font-semibold">Título secreto</h2>
+          <span class="text-sm text-gray-500">02 jul 2023</span>
+        </div>
+        <div class="flex flex-wrap gap-2 mb-1">
+          <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-xs">diario</span>
+        </div>
+        <p class="text-sm text-gray-700">Lorem ipsum dolor sit amet, consectetur</p>
+        <p class="text-sm text-gray-600 mt-1">Nivel <span class="font-semibold text-green-600">bajo</span></p>
+      </div>
+    </div>
+</div>
+
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="my_modal_1" class="modal">
+  <div class="modal-box">
+    <!-- Modal -->
+        <!-- Encabezado -->
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold">Nuevo Secreto</h2>
+        </div>
+        <!-- Formulario -->
+        <form class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium">Título</label>
+            <input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Ej: Contraseña email" />
+          </div>
+    
+          <div>
+            <label class="block text-sm font-medium">Contenido</label>
+            <textarea rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Ej: Mi contraseña es..."></textarea>
+          </div>
+    
+          <div>
+            <label class="block text-sm font-medium">Etiquetas</label>
+            <input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Ej: claves, personal" />
+          </div>
+    
+          <div>
+            <label class="block text-sm font-medium">Nivel de sensibilidad</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2">
+              <option>Bajo</option>
+              <option>Medio</option>
+              <option>Alto</option>
+            </select>
+          </div>
+    
+          <!-- Botones -->
+          
+        </form>
+    <div class="modal-action">
+      <form method="dialog">
+        <div class="flex justify-end gap-2 pt-4">
+            <form method="dialog">
+                <button class="btn me-2">Close</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+          </div>
+      </form>
+    </div>
+  </div>
+</dialog>
+  
+  
+  
