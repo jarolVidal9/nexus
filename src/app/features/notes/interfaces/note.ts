@@ -1,14 +1,12 @@
-import { Checklist } from "./checklist";
 
 export interface Note {
     id: string,
     userId: string,
     title: string,
-    type: 'text' | 'checklist',
     pinned?: boolean,
     archived?: boolean,
-    color?: string,
-    content:  Checklist[],
+    content:  string,
     img?: string,
+    tags?: string[],
     createdAt: Date,
 }

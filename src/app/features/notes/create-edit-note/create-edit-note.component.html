@@ -1,29 +1,44 @@
-<form class="mx-auto bg-base-100 p-6 rounded-sm" [style.background]="selectedColor()" [formGroup]="noteForm" (ngSubmit)="onSubmit()">
-    <!-- Título -->
-    <div class="mb-4">
-        <input id="title" name="title" type="text" placeholder="Título de la nota" formControlName="title"
-            class="w-full bg-transparent border-0 border-b-2 text-xl font-bold px-0 py-2 focus:outline-none text-black" />
+<div class="flex items-center bg-base-100 justify-center">
+    <div class="w-full  p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold text-center mb-6 ">
+            {{ data? 'Editar Nota' : 'Crear Nota' }}
+        </h2>
+        <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+            <!-- Título -->
+            <div class="mb-4">
+                <label for="title" class="block text-sm font-medium  mb-1">Título</label>
+                <input id="title" name="title" type="text" placeholder="Escribe el título de la nota" formControlName="title"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
+                    @if(noteForm.get('title')?.touched) {
+                        <span class="text-red-500 text-sm">
+                            {{ noteForm.get('title')?.errors?.['required'] ? 'El título es obligatorio' : '' }}
+                        </span>
+                    }
+            </div>
+        
+            <!-- Contenido -->
+            <div class="mb-4">
+                <label for="content" class="block text-sm font-medium  mb-1">Contenido</label>
+                <textarea id="content" name="content" placeholder="Escribe el contenido de la nota" formControlName="content"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"></textarea>
+                    @if(noteForm.get('content')?.touched) {
+                        <span class="text-red-500 text-sm">
+                            {{ noteForm.get('content')?.errors?.['required'] ? 'El contenido es obligatorio' : '' }}
+                        </span>
+                    }
+            </div>
+        
+         
+        
+            <!-- Botones -->
+            <div class="flex justify-end gap-3">
+                <button type="submit" class="px-4 py-2 btn btn-primary" [disabled]="noteForm.invalid || loading() || !noteForm.dirty">
+                    @if(loading()) {
+                        <span class="loading loading-spinner loading-sm"></span>
+                    }
+                    {{ data ? 'Actualizar' : 'Crear'  }}
+                </button>
+            </div>
+        </form>
     </div>
-
-    <textarea name="" id="" >
-
-    </textarea>
-
-
-    <!-- Color -->
-    <div class="mb-4">
-        <div class="flex flex-wrap gap-2">
-            @for (color of colors; track $index) {
-            <span class="inline-block w-7 h-7 rounded-full border-2 cursor-pointer" [style.background]="color"
-                (click)="setColor(color)"></span>
-            }
-        </div>
-    </div>
-
-    <!-- Botón Guardar -->
-    <div class="flex justify-end">
-        <button type="submit" class="btn btn-primary px-5 py-2 rounded-lg font-bold shadow text-black">
-            Guardar
-        </button>
-    </div>
-</form>
+</div>

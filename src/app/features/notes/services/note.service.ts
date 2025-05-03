@@ -22,8 +22,8 @@ export class NoteService {
   createNote(note: Note) {
     return this.http.post(`${this.apiUrl}/note`, note);
   }
-  updateNote(note: Note) {
-    return this.http.put(`${this.apiUrl}/note/${note.id}`, note);
+  updateNote(id :string,note: Note) {
+    return this.http.put(`${this.apiUrl}/note/${id}`, note);
   }
   deleteNote(id: string) {
     return this.http.delete(`${this.apiUrl}/note/${id}`);
