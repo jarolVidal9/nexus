@@ -14,7 +14,7 @@ import { CreateEditNoteComponent } from './create-edit-note/create-edit-note.com
 })
 export class NotesComponent {
   notes = signal<Note[]>([]);
-  loadingNotes = signal(true);
+  loading = signal(true);
 
   constructor(
     private notesServce: NoteService,
@@ -22,14 +22,14 @@ export class NotesComponent {
   ){}
 
   ngOnInit(){
-    this.loadingNotes.set(true);
+    this.loading.set(true);
     this.getNotes();
   }
   getNotes(){
     this.notesServce.getNotes().subscribe({
       next: (notes : Note[]) => {
         this.notes.set(notes);
-        this.loadingNotes.set(false);
+        this.loading.set(false);
       },
       error: (error) => {
         console.error(error);
@@ -37,13 +37,16 @@ export class NotesComponent {
     });
   }
 
-  togglePin(note: Note){
+  togglePin(note: Note, event: Event) {
+    event.stopPropagation();
     const updatedNote = { ...note, pinned: !note.pinned };
-    this.notesServce.updateNote(updatedNote).subscribe({
+    this.notesServce.updateNote(updatedNote.id, updatedNote).subscribe({
       next: () => {
-        this.notes.update(notes =>
-          notes.map(n => n.id === updatedNote.id ? updatedNote : n)
-        );
+        this.notes.update(notes => {
+          const updatedNotes = notes.map(n => n.id === updatedNote.id ? updatedNote : n);
+          // Reorder notes: pinned notes first
+          return updatedNotes.sort((a, b) => Number(b.pinned) - Number(a.pinned));
+        });
       },
       error: (error) => {
         console.error(error);
@@ -51,9 +54,10 @@ export class NotesComponent {
     });
   }
 
-  archiveNote(note: Note){
+  toggleArchive(note: Note, event: Event){
+    event.stopPropagation();
     const updatedNote = { ...note, archived: !note.archived };
-    this.notesServce.updateNote(updatedNote).subscribe({
+    this.notesServce.updateNote(updatedNote.id,updatedNote).subscribe({
       next: () => {
         // Remove the note from the list if archived, otherwise update it
         this.notes.update(notes =>
@@ -71,16 +75,27 @@ export class NotesComponent {
 
   addNote(){
     const dialogRef = this.dialog.open(CreateEditNoteComponent,{
-          
-    });
-  }
-  editNote(note: Note){
-    console.log('note', note);
-    
-    // Open the dialog with the note data
-    const dialogRef = this.dialog.open(CreateEditNoteComponent,{
-      data: note
+      data: null,
+      width: '400px',
     });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result){
+        this.notes.update((notes) => [...notes, result]);
+      }
+    });
+  }
+  editNote(note: Note){    
+    // Open the dialog with the note data
+    const dialogRef = this.dialog.open(CreateEditNoteComponent,{
+      data: note,
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result){
+        this.notes.update((notes) => notes.map(n => n.id === result.id ? result : n));
+      }
+    });
   }
 }
