@@ -29,7 +29,7 @@ export class NoteService {
     return this.http.delete(`${this.apiUrl}/note/${id}`);
   }
   getArchivedNotes() {
-    return this.http.get(`${this.apiUrl}/note/archived`);
+    return this.http.get<Note[]>(`${this.apiUrl}/note/archived`);
   }
   
 }

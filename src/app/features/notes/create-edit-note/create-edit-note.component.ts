@@ -1,13 +1,12 @@
 import { Component, Inject, signal } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NoteService } from '../services/note.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-edit-note',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './create-edit-note.component.html',
   styleUrl: './create-edit-note.component.css'
 })
@@ -15,7 +14,9 @@ export class CreateEditNoteComponent {
   noteForm : FormGroup;
   loading = signal(false);
   constructorTags = ['hola','mundo','test'];
-
+  editingTitle = signal(false);
+  editingContent = signal(false);
+  newTag = signal('');
 
   constructor(
     private dialog: MatDialogRef<CreateEditNoteComponent>,
@@ -28,7 +29,8 @@ export class CreateEditNoteComponent {
       content: ['', Validators.required],
       pinned: [false],
       archived: [false],
-      img: [null]
+      img: [null],
+      tags: this.formBuilder.array([]),
     });
   }
   ngOnInit(){
@@ -36,8 +38,13 @@ export class CreateEditNoteComponent {
       this.noteForm.patchValue({
         ...this.data,
       });
+      if (this.data.tags) {
+        const tagArray = this.noteForm.get('tags') as FormArray;
+        this.data.tags.forEach((tag: string) => {
+          tagArray.push(new FormControl(tag));
+        });
+      }
     }
-
   }
   onSubmit(){
     this.loading.set(true);
@@ -59,7 +66,30 @@ export class CreateEditNoteComponent {
       }
     }
   }
+  get tags(): FormArray {
+    return this.noteForm.get('tags') as FormArray;
+  }
 
+  addTag() {
+    this.noteForm.markAsDirty();
+    const tag = this.newTag().trim();
+    if (tag && !this.tags.value.includes(tag)) {
+      this.tags.push(new FormControl(tag));
+      this.newTag.set('');
+    }
+  }
+  onTagInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input) {
+      this.newTag.set(input.value);
+    }
+  }
+  
+
+  removeTag(index: number) {
+    this.noteForm.markAsDirty();
+    this.tags.removeAt(index);
+  }
 
   cancel(){
     this.dialog.close();
