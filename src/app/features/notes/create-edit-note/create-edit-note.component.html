@@ -1,42 +1,84 @@
 <div class="flex items-center bg-base-100 justify-center">
-    <div class="w-full  p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-semibold text-center mb-6 ">
-            {{ data? 'Editar Nota' : 'Crear Nota' }}
+    <div class="w-full p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold text-center mb-6">
+            {{ data ? 'Detalle de Nota' : 'Crear Nota' }}
         </h2>
         <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
             <!-- Título -->
             <div class="mb-4">
-                <label for="title" class="block text-sm font-medium  mb-1">Título</label>
-                <input id="title" name="title" type="text" placeholder="Escribe el título de la nota" formControlName="title"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
-                    @if(noteForm.get('title')?.touched) {
-                        <span class="text-red-500 text-sm">
-                            {{ noteForm.get('title')?.errors?.['required'] ? 'El título es obligatorio' : '' }}
+                <label for="title" class="block text-sm font-medium mb-1">Título</label>
+                <div class="relative">
+                    @if(!editingTitle()){
+                        <span (click)="editingTitle.set(true)" class="block w-full border border-transparent bg-base-200 px-3 py-2 text-sm rounded-md cursor-pointer">
+                            {{ noteForm.get('title')?.value || 'Escribe el título de la nota' }}
                         </span>
+                    }@else {
+                        <input id="title" name="title" type="text" placeholder="Escribe el título de la nota" formControlName="title"
+                            (blur)="editingTitle.set(false)"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
                     }
+                </div>
+                @if(noteForm.get('title')?.touched && noteForm.get('title')?.errors?.['required']){
+                    <span class="text-red-500 text-sm">
+                        El título es obligatorio
+                    </span>
+                }
             </div>
-        
+
             <!-- Contenido -->
             <div class="mb-4">
-                <label for="content" class="block text-sm font-medium  mb-1">Contenido</label>
-                <textarea id="content" name="content" placeholder="Escribe el contenido de la nota" formControlName="content"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"></textarea>
-                    @if(noteForm.get('content')?.touched) {
-                        <span class="text-red-500 text-sm">
-                            {{ noteForm.get('content')?.errors?.['required'] ? 'El contenido es obligatorio' : '' }}
+                <label for="content" class="block text-sm font-medium mb-1">Contenido</label>
+                <div class="relative">
+                    @if(!editingContent()){
+                        <span (click)="editingContent.set(true)" class="block w-full border border-transparent px-3 py-2 text-sm bg-base-200 rounded-md cursor-pointer min-h-[100px] max-h-[200px] overflow-auto">
+                            {{ noteForm.get('content')?.value || 'Escribe el contenido de la nota' }}
                         </span>
+                    }@else {
+                        <textarea id="content" name="content" placeholder="Escribe el contenido de la nota" formControlName="content"
+                            (blur)="editingContent.set(false)"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 min-h-[100px] overflow-auto"></textarea>
                     }
+                </div>
+                @if(noteForm.get('content')?.touched && noteForm.get('content')?.errors?.['required']){
+                    <span class="text-red-500 text-sm">
+                        El contenido es obligatorio
+                    </span>
+                }
             </div>
-        
-         
-        
+
+            
+
+            <!-- Etiquetas -->
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Etiquetas</label>
+                <div class="flex gap-2 mb-2 flex-wrap">
+                @for(tag of tags.controls; track tag; let i = $index){
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center gap-1">
+                    {{ tag.value }}
+                    <button type="button" (click)="removeTag(i)" class="text-red-500 hover:text-red-700 text-xs">x</button>
+                    </span>
+                }
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-sm flex items-center gap-1">
+                        <input
+                        type="text"
+                        [value]="newTag()"
+                        (input)="onTagInput($event)"
+                        (keydown.enter)="addTag(); $event.preventDefault()"
+                        placeholder="Agregar etiqueta"
+                        class="border-none bg-transparent focus:outline-none text-sm w-auto" />
+                    </span>
+                </div>
+            </div>
+  
             <!-- Botones -->
             <div class="flex justify-end gap-3">
                 <button type="submit" class="px-4 py-2 btn btn-primary" [disabled]="noteForm.invalid || loading() || !noteForm.dirty">
-                    @if(loading()) {
+                    @if(loading()){
                         <span class="loading loading-spinner loading-sm"></span>
                     }
-                    {{ data ? 'Actualizar' : 'Crear'  }}
+                    {{ data ? 'Actualizar' : 'Crear' }}
                 </button>
             </div>
         </form>

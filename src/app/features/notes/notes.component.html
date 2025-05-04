@@ -1,38 +1,56 @@
-
 @if(loading()){
-  <div class="flex items-center justify-center h-96">
+  <div class="flex items-center justify-center h-96 animate-pulse">
       <span class="loading loading-spinner loading-lg text-primary"></span>
   </div> 
 }@else {
   <div class="max-w-full mx-auto p-6">
     <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold ">Notas</h2>
-      <button class="btn btn-primary text-white px-4 py-2 rounded-lg" (click)="addNote()">+ Agregar Nota</button>
+      <h2 class="text-2xl font-bold animate-fade-in">Notas</h2>
+       <div class="flex gap-4">
+        <button class="btn btn-primary text-white px-4 py-2 rounded-lg hover:scale-105 transition-transform duration-300" (click)="addNote()">+ Agregar Nota</button>
+      </div>
     </div>
 
     <!-- Input de búsqueda -->
     <input
       type="text"
       placeholder="Buscar nota..."
-      class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-300"
+      (input)="onSearch($event)"
     />
-
-    <!-- Filtros -->
-    <!-- <div class="flex flex-wrap gap-2 mb-4">
-      <span class="px-3 py-1 text-sm bg-blue-200 text-blue-800 rounded-full">trabajo</span>
-      <span class="px-3 py-1 text-sm bg-green-200 text-green-800 rounded-full">ideas</span>
-      <span class="px-3 py-1 text-sm bg-yellow-200 text-yellow-800 rounded-full">pendientes</span>
-    </div> -->
 
     <!-- Lista de notas -->
     <div class="grid gap-4 md:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
       @for (note of notes(); track note.id) {
-        <div class="border p-4 rounded-lg shadow-sm hover:shadow-md transition flex flex-col justify-between" (click)="editNote(note)">
+        <div class="border p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between animate-slide-up" (click)="editNote(note)">
           <div>
             <div class="flex justify-between items-start">
               <h3 class="text-lg font-semibold">{{note.title}}</h3>
-              <span class="text-sm text-gray-500">{{note.createdAt | date:'short'}}</span>
+              <div class="flex justify-end">
+                <button class="btn btn-sm" [ngClass]="note.pinned ? 'text-blue-500 hover:text-blue-700' : 'text-gray-500 hover:text-gray-700'" (click)="togglePin(note, $event)" aria-label="Fijar/Desfijar">
+                  @if(pinnedNoteId()==note.id) {
+                    <span class="loading loading-spinner loading-sm text-blue-500"></span>
+                  } @else {
+                    <i class="fas" [ngClass]="note.pinned ? 'fa-thumbtack' : 'fa-thumbtack fa-rotate-90'"></i>
+                  }
+                </button>
+                <button class="btn btn-sm ml-2 text-green-500 hover:text-green-700" (click)="toggleArchive(note, $event)" aria-label="Archivar/Desarchivar">
+                  @if(archivedNoteId()==note.id) {
+                    <span class="loading loading-spinner loading-sm text-green-500"></span>
+                  } @else {
+                    <i class="fas" [ngClass]="note.archived ? 'fa-box-open' : 'fa-box'"></i>
+                  }
+                </button>
+                <button class="btn btn-sm ml-2 text-red-500 hover:text-red-700" aria-label="Eliminar" (click)="deleteNote(note, $event)">
+                  @if(deleteNoteId()==note.id) {
+                    <span class="loading loading-spinner loading-sm text-red-500"></span>
+                  } @else {
+                    <i class="fas fa-trash"></i>
+                  }
+                </button>
+              </div>
             </div>
+            <span class="text-xs text-gray-500">{{note.createdAt | date:'short'}}</span>
             <p class="mt-2 text-sm">
               {{note.content | slice:0:100}}
               @if(note.content.length > 100) {...}
@@ -40,16 +58,8 @@
           </div>
           <div class="flex gap-2 mt-3">
             @for(tag of note.tags; track $index) {
-              <span class="bg-base-300 text-xs px-2 py-1 rounded-full">{{tag}}</span>
+              <span class="bg-base-300 text-xs px-2 py-1 rounded-full animate-fade-in">{{tag}}</span>
             }
-          </div>
-          <div class="flex justify-end gap-2 mt-4">
-            <button class="btn btn-sm btn-outline text-blue-500 border-blue-500 hover:bg-blue-500 hover:text-white" aria-label="Pinear" (click)="togglePin(note, $event)">
-              {{note.pinned ? 'Despinear' : 'Pinear'}}
-            </button>
-            <button class="btn btn-sm btn-outline text-green-500 border-green-500 hover:bg-green-500 hover:text-white" aria-label="Archivar" (click)="toggleArchive(note, $event)">
-              {{note.archived ? 'Desarchivar' : 'Archivar'}}
-            </button>
           </div>
         </div>  
       }
