@@ -30,9 +30,13 @@
                                 <div class="flex items-center gap-1">
                                     @if(!category.Goals || category.Goals.length < 1){
                                         <button class="p-1 rounded hover:bg-red-100" title="Eliminar categoría" (click)="deleteCategory(category.id)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                            </svg>
+                                            @if(loadingDeleteCategory()){
+                                                <span class="loading loading-spinner loading-lg text-primary"></span>
+                                            }@else {
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                </svg>
+                                            }
                                         </button>
                                     }
                                     <a class="p-1 rounded" title="Agregar" (click)="saveGoal(category.id)">
@@ -46,19 +50,6 @@
                                 @for (goal of category.Goals; track goal.id) {
                                    <div class="max-w-md bg-base-100 rounded-xl shadow z-20 p-3 mx-auto" (click)="editGoal(goal, category.id)">
                                        <div class="flex justify-between items-start mb-3">
-                                        <!-- <button class="rounded" title="Mover a la izquierda">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 cursor-move" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <circle cx="5" cy="7" r="1.5" fill="currentColor"/>
-                                                <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
-                                                <circle cx="5" cy="17" r="1.5" fill="currentColor"/>
-                                                <circle cx="12" cy="7" r="1.5" fill="currentColor"/>
-                                                <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
-                                                <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
-                                                <circle cx="19" cy="7" r="1.5" fill="currentColor"/>
-                                                <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
-                                                <circle cx="19" cy="17" r="1.5" fill="currentColor"/>
-                                            </svg>
-                                        </button> -->
                                            <div class="text-end">
                                                @switch (goal.state) {
                                                    @case ('proceso') {

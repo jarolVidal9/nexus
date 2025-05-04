@@ -28,21 +28,21 @@
               <h3 class="text-lg font-semibold">{{note.title}}</h3>
               <div class="flex justify-end">
                 <button class="btn btn-sm" [ngClass]="note.pinned ? 'text-blue-500 hover:text-blue-700' : 'text-gray-500 hover:text-gray-700'" (click)="togglePin(note, $event)" aria-label="Fijar/Desfijar">
-                  @if(pinnedNoteId()==note.id) {
+                  @if(pinnedNoteId()===note.id) {
                     <span class="loading loading-spinner loading-sm text-blue-500"></span>
                   } @else {
                     <i class="fas" [ngClass]="note.pinned ? 'fa-thumbtack' : 'fa-thumbtack fa-rotate-90'"></i>
                   }
                 </button>
                 <button class="btn btn-sm ml-2 text-green-500 hover:text-green-700" (click)="toggleArchive(note, $event)" aria-label="Archivar/Desarchivar">
-                  @if(archivedNoteId()==note.id) {
+                  @if(archivedNoteId()===note.id) {
                     <span class="loading loading-spinner loading-sm text-green-500"></span>
                   } @else {
                     <i class="fas" [ngClass]="note.archived ? 'fa-box-open' : 'fa-box'"></i>
                   }
                 </button>
                 <button class="btn btn-sm ml-2 text-red-500 hover:text-red-700" aria-label="Eliminar" (click)="deleteNote(note, $event)">
-                  @if(deleteNoteId()==note.id) {
+                  @if(deleteNoteId()===note.id) {
                     <span class="loading loading-spinner loading-sm text-red-500"></span>
                   } @else {
                     <i class="fas fa-trash"></i>

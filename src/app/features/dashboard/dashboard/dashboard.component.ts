@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../auth/services/auth.service';
-import { NavbarComponent } from '../../../layout/navbar/navbar.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +8,5 @@ import { NavbarComponent } from '../../../layout/navbar/navbar.component';
 })
 export class DashboardComponent {
 
-  constructor() { }
 
 }

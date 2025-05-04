@@ -66,7 +66,7 @@
         <!-- Prioridad -->
         <div class="flex flex-col">
             <div class="flex items-center gap-3">
-                <label class="text-sm font-medium ">Prioridad:</label>
+                <label class="text-sm font-medium " for="priority">Prioridad:</label>
                 <select formControlName="priority"
                     class="select select-xs px-3 py-1 rounded-full text-xs w-30"
                 >
@@ -88,7 +88,7 @@
             <div class="flex flex-col gap-2 mb-2">
                 <div class="flex gap-2">
                     <div class="flex-1">
-                        <label class="text-xs mb-1 block">Progreso</label>
+                        <label class="text-xs mb-1 block" for="progress">Progreso</label>
                         <input
                             formControlName="progress"
                             type="number"
@@ -98,7 +98,7 @@
                         />
                     </div>
                     <div class="flex-1">
-                        <label class="text-xs mb-1 block">Objetivo</label>
+                        <label class="text-xs mb-1 block" for="objective">Objetivo</label>
                         <input
                             formControlName="objective"
                             type="number"
@@ -108,7 +108,7 @@
                         />
                     </div>
                     <div class="flex-1">
-                        <label class="text-xs mb-1 block">Unidad</label>
+                        <label class="text-xs mb-1 block" for="unit">Unidad</label>
                         <input
                             formControlName="unit"
                             type="text"
@@ -135,7 +135,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
             </svg>
-            <label class="text-xs font-bold">Fecha Límite</label>
+            <label class="text-xs font-bold" for="dueDate">Fecha Límite</label>
             
             <input
                 formControlName="dueDate"

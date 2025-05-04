@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
@@ -43,7 +43,7 @@ export class PasswordComponent {
     this.success.set(false);
     this.loading.set(true);
     this.profileService.updatePassword(this.passwordForm.value).subscribe({
-      next: (response) => {
+      next: () => {
         this.passwordForm.reset();
         this.success.set(true);
         this.loading.set(false);

@@ -1,7 +1,8 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, Inject, signal, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NoteService } from '../services/note.service';
+import { Note } from '../interfaces/note';
 
 @Component({
   selector: 'app-create-edit-note',
@@ -10,7 +11,7 @@ import { NoteService } from '../services/note.service';
   templateUrl: './create-edit-note.component.html',
   styleUrl: './create-edit-note.component.css'
 })
-export class CreateEditNoteComponent {
+export class CreateEditNoteComponent implements OnInit {
   noteForm : FormGroup;
   loading = signal(false);
   constructorTags = ['hola','mundo','test'];
@@ -20,7 +21,7 @@ export class CreateEditNoteComponent {
 
   constructor(
     private dialog: MatDialogRef<CreateEditNoteComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: Note | null,
     private formBuilder: FormBuilder,
     private noteService: NoteService
   ){

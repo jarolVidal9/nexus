@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild, ElementRef, HostListener} from '@angular/core';
+import { Component, signal, ViewChild, ElementRef, HostListener, OnInit} from '@angular/core';
 import { GoalService } from './services/goal.service';
 import { Category } from './interfaces/category';
 import { CommonModule } from '@angular/common';
@@ -21,12 +21,13 @@ import { FilesService } from '../../core/services/files.service';
   templateUrl: './goals.component.html',
   styleUrl: './goals.component.css'
 })
-export class GoalsComponent {
+export class GoalsComponent implements OnInit {
   categorysWithGoals = signal<Category[]>([]);
   addGoalInput = signal(false);
   createGoalForm : FormGroup;
   loading = signal(true);
   loadingCreateCategory = signal(false);
+  loadingDeleteCategory = signal(false);
 
   constructor(
     private goalService: GoalService,
@@ -130,15 +131,15 @@ export class GoalsComponent {
   
   deleteGoal(goalId: string, Event: MouseEvent){
     Event.stopPropagation();
-    this.categorysWithGoals.update((prev) => {
-      const category = prev.find(cat => cat.Goals.some(goal => goal.id === goalId));
-      if (category) {
-        category.Goals = category.Goals.filter(goal => goal.id !== goalId);
-      }
-      return [...prev];
-    });
     this.goalService.deleteGoal(goalId).subscribe({
       next: () => {
+        this.categorysWithGoals.update((prev) => {
+          const category = prev.find(cat => cat.Goals.some(goal => goal.id === goalId));
+          if (category) {
+            category.Goals = category.Goals.filter(goal => goal.id !== goalId);
+          }
+          return [...prev];
+        });
       },
       error: (error) => {
         console.error(error);
@@ -170,11 +171,13 @@ export class GoalsComponent {
   }
 
   deleteCategory(categoryId: string) {
-    this.categorysWithGoals.update((prev) => {
-      return prev.filter(cat => cat.id !== categoryId);
-    });
+    this.loadingDeleteCategory.set(true);
     this.goalService.deleteGoalCategory(categoryId).subscribe({
       next: () => {
+        this.categorysWithGoals.update((prev) => {
+          return prev.filter(cat => cat.id !== categoryId);
+        });
+        this.loadingDeleteCategory.set(false);
       },
       error: (error) => {
         console.error(error);

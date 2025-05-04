@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { ProfileSharedService } from '../../../core/services/profile-shared.service';
 import { environment } from '../../../../environments/environment';
+import { UserInterface } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-login',
@@ -51,7 +52,7 @@ export class LoginComponent {
       this.authService.login(loginData).subscribe({
         next: () => {
           this.authService.userData().subscribe({
-            next: (userData:any) => {
+            next: (userData: UserInterface) => {
               this.profileSharedService.setProfileImage(this.apiUrl+ '/uploads/'+ userData.img);
             }
           });

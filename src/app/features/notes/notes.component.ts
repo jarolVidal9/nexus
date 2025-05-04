@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { NoteService } from './services/note.service';
 import { Note } from './interfaces/note';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { CreateEditNoteComponent } from './create-edit-note/create-edit-note.com
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.css'
 })
-export class NotesComponent {
+export class NotesComponent implements OnInit {
   notes = signal<Note[]>([]);
   loading = signal(true);
   allNotes = signal<Note[]>([]);

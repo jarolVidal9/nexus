@@ -1,9 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { environment } from '../../../../../environments/environment';
 import { ProfileService } from '../../services/profile.service';
 import { ProfileSharedService } from '../../../../core/services/profile-shared.service';
-import { Profile } from '../../interfaces/profile';
+import { ProfileInterface } from '../../interfaces/profile';
 import { FilesService } from '../../../../core/services/files.service';
 
 
@@ -13,7 +12,7 @@ import { FilesService } from '../../../../core/services/files.service';
   templateUrl: './update-profile.component.html',
   styleUrl: './update-profile.component.css'
 })
-export class UpdateProfileComponent {
+export class UpdateProfileComponent implements OnInit {
   profileForm: FormGroup;
   loading = signal(false);
   loadingProfile = signal(false);
@@ -44,7 +43,7 @@ export class UpdateProfileComponent {
   ngOnInit(): void {
     this.loadingProfile.set(true);
     this.profileService.getProfile().subscribe({
-      next: (profile: Profile) => {
+      next: (profile: ProfileInterface) => {
         if(profile.img) this.imgPath.set(this.FileService.getRouteImage(profile.img)); 
         this.profileForm.patchValue({
           img: profile.img,
@@ -71,18 +70,19 @@ export class UpdateProfileComponent {
       this.error.set(false);
       this.success.set(false);
       this.errorMessage.set([]);
-      const profileData: Profile = {
+      const profileData: ProfileInterface = {
         ...this.profileForm.value
       };
 
       if (this.selectedFile) {
         this.FileService.uploadFile(this.selectedFile).subscribe({
-          next: (data: any) => {            
+          next: (data: {filename: string}) => {            
             profileData.img = data.filename; 
             this.updateProfile(profileData);
             this.profileSharedService.setProfileImage(this.FileService.getRouteImage(data.filename));         
           },
           error: (error) => {
+            console.log(error);
             this.loading.set(false);
           }
         });
@@ -92,7 +92,7 @@ export class UpdateProfileComponent {
     }
   }
 
-  private updateProfile(profileData: Profile): void {
+  private updateProfile(profileData: ProfileInterface): void {
     this.profileService.updateProfile(profileData).subscribe({
       next: () => {
         this.loading.set(false);

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, inject, signal } from '@angular/core';
+import { Component, Inject, signal, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ import { Goal } from '../interfaces/goal';
   templateUrl: './create-edit.component.html',
   styleUrl: './create-edit.component.css'
 })
-export class CreateEditComponent {
+export class CreateEditComponent implements OnInit {
   createGoalForm : FormGroup;
   loading = signal(false);
   previewImg = signal<string | ArrayBuffer | null>(null);
@@ -23,7 +23,7 @@ export class CreateEditComponent {
 
   constructor(
     private dialog: MatDialogRef<CreateEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: { goal: Goal, categoryId: string },
     private fb: FormBuilder,
     private goalService: GoalService,
     private fileService: FilesService
@@ -175,7 +175,7 @@ export class CreateEditComponent {
     }
   }
 
-  updateGoal(goalData: any) {
+  updateGoal(goalData: Goal) {
     this.goalService.editGoal(this.data.goal.id, goalData).subscribe({
       next: (goal: Goal) => {        
       this.loading.set(false);

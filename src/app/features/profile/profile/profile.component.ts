@@ -1,5 +1,4 @@
-import { Component, signal } from '@angular/core';
-import { NavbarComponent } from "../../../layout/navbar/navbar.component";
+import { Component } from '@angular/core';
 import { PasswordComponent } from './password/password.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 

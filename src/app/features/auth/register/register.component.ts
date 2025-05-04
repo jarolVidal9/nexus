@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Route, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { RegisterInterface } from '../interfaces/register.interface';
 
@@ -39,7 +39,7 @@ export class RegisterComponent {
       this.loading.set(true);
       const dataRegister: RegisterInterface = this.registerForm.value;
       this.authService.register(dataRegister).subscribe({
-        next: (response) => {
+        next: () => {
           this.loading.set(false);
           this.router.navigate(['/auth/login']);
         },
