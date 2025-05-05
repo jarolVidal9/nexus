@@ -89,7 +89,7 @@
       <!-- Movimiento Individual -->
       @if(movements().length > 0){
       @for (movement of movements(); track movement.id) {
-      <div class="flex flex-col md:flex-row md:items-center justify-between p-4 hover:bg-gray-100 transition gap-2 md:gap-0">
+      <div class="flex flex-col md:flex-row md:items-center justify-between p-4 hover:bg-base-100 transition gap-2 md:gap-0">
         <div class="flex items-center gap-3 flex-1 min-w-0">
           @if(movement.type === 'ingreso'){
           <div class="p-2 rounded-full bg-green-500 text-green-100 flex-shrink-0">
