@@ -1,4 +1,65 @@
-<div class="welcome-message text-center mt-12">
-    <h1 class="text-4xl font-bold text-shadow-green-50">🌟 Bienvenido al Dashboard 🌟</h1>
-    <p class="text-lg text-gray-600 mt-4">Estamos encantados de tenerte aquí. ¡Explora y disfruta!</p>
+<div class="dashboard-container p-8  min-h-screen">
+    <div class="welcome-message text-center mt-12 mb-10">
+        <h1 class="text-4xl font-bold text-shadow-green-50">🌟 Bienvenido al Dashboard 🌟</h1>
+        <p class="text-lg  mt-4">Estamos encantados de tenerte aquí. ¡Explora y disfruta!</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+        <div class=" rounded-lg shadow bg-base-200 p-6 flex flex-col items-center">
+            <div class="text-3xl mb-2">🎯</div>
+            <h2 class="font-semibold text-xl mb-1">Metas</h2>
+            <p class=" text-sm">Visualiza y gestiona tus objetivos.</p>
+        </div>
+        <div class=" rounded-lg shadow bg-base-200 p-6 flex flex-col items-center">
+            <div class="text-3xl mb-2">💰</div>
+            <h2 class="font-semibold text-xl mb-1">Finanzas</h2>
+            <p class=" text-sm">Controla tus ingresos y gastos.</p>
+        </div>
+        <div class=" rounded-lg shadow bg-base-200 p-6 flex flex-col items-center">
+            <div class="text-3xl mb-2">📝</div>
+            <h2 class="font-semibold text-xl mb-1">Notas</h2>
+            <p class=" text-sm">Guarda y consulta tus notas importantes.</p>
+        </div>
+        <div class=" rounded-lg shadow bg-base-200 p-6 flex flex-col items-center">
+            <div class="text-3xl mb-2">🔒</div>
+            <h2 class="font-semibold text-xl mb-1">Privado</h2>
+            <p class=" text-sm">Accede a tu información privada y segura.</p>
+        </div>
+    </div>
+
+    <div class=" rounded-lg shadow bg-base-200 p-6">
+        <h3 class="font-semibold text-lg mb-4">Actividad Reciente</h3>
+        <ul class="divide-y divide-gray-200">
+            <li class="py-2 flex items-center">
+                <span class="mr-2 text-green-500">🎯</span>
+                Alcanzaste la meta "Ahorrar $1000"
+                <span class="ml-auto text-xs text-gray-400">hace 2 horas</span>
+            </li>
+            <li class="py-2 flex items-center">
+                <span class="mr-2 text-blue-500">💰</span>
+                Registraste un nuevo gasto
+                <span class="ml-auto text-xs text-gray-400">hace 1 día</span>
+            </li>
+            <li class="py-2 flex items-center">
+                <span class="mr-2 text-yellow-500">📝</span>
+                Añadiste una nota importante
+                <span class="ml-auto text-xs text-gray-400">hace 3 días</span>
+            </li>
+            <li class="py-2 flex items-center">
+                <span class="mr-2 text-purple-500">🔒</span>
+                Actualizaste tu contraseña
+                <span class="ml-auto text-xs text-gray-400">hace 5 días</span>
+            </li>
+            <li class="py-2 flex items-center">
+                <span class="mr-2 text-pink-500">📅</span>
+                Programaste un nuevo evento
+                <span class="ml-auto text-xs text-gray-400">hace 1 semana</span>
+            </li>
+            <li class="py-2 flex items-center">
+                <span class="mr-2 text-indigo-500">📈</span>
+                Revisaste tu progreso mensual
+                <span class="ml-auto text-xs text-gray-400">hace 2 semanas</span>
+            </li>
+        </ul>
+    </div>
 </div>
