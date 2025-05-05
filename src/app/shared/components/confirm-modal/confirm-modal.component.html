@@ -1,0 +1,18 @@
+<div class="shadow-lg p-8 w-full">
+    <h2 class="text-xl text-center font-semibold mb-4">{{data.title}}</h2>
+    <p class="mb-6 text-gray-600 text-sm">{{data.message}}</p>
+    <div class="modal-actions flex justify-end space-x-3">
+        <button
+            class="px-4 py-2 btn btn-secondary btn-sm"
+            (click)="onCancel()"
+        >
+            <span class="text-sm">{{ data.cancelButtonText}}</span>
+        </button>
+        <button
+            class="px-4 py-2 btn btn-error btn-sm"
+            (click)="onConfirm()"
+        >
+            <span class="text-sm">{{ data.confirmButtonText}}</span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+<div class="flex items-center bg-base-100 justify-center">
+    <div class="w-full max-w-lg p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold text-center mb-6">
+            {{ data ? 'Editar Movimiento' : 'Añadir Movimiento' }}
+        </h2>
+        <form [formGroup]="movementForm" (ngSubmit)="onSubmit()">
+            <!-- Título -->
+            <div class="mb-4">
+                <label for="title" class="block text-sm font-medium mb-1">Título</label>
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    placeholder="Escribe el título"
+                    formControlName="title"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+                />
+                @if(movementForm.get('title')?.touched && movementForm.get('title')?.errors?.['required']){
+                    <span class="text-red-500 text-sm">El título es obligatorio</span>
+                }
+            </div>
+
+            <!-- Fecha -->
+            <div class="mb-4">
+                <label for="date" class="block text-sm font-medium mb-1">Fecha</label>
+                <input
+                    id="date"
+                    name="date"
+                    type="date"
+                    formControlName="date"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+                />
+                @if(movementForm.get('date')?.touched && movementForm.get('date')?.errors?.['required']){
+                    <span class="text-red-500 text-sm">La fecha es obligatoria</span>
+                }
+            </div>
+
+            <!-- Monto -->
+            <div class="mb-4">
+                <label for="amount" class="block text-sm font-medium mb-1">Monto</label>
+                <input
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    formControlName="amount"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+                />
+                @if(movementForm.get('amount')?.touched){
+                    <span class="text-red-500 text-sm">
+                        {{ movementForm.get('amount')?.errors?.['required'] ? 'El monto es obligatorio' : '' }}
+                        {{ movementForm.get('amount')?.errors?.['min'] ? 'El monto debe ser mayor a 0' : '' }}
+                    </span>
+                }
+            </div>
+
+            <!-- Tipo -->
+            <div class="mb-4">
+                <label for="type" class="block text-sm font-medium mb-1">Tipo</label>
+                <select
+                    id="type"
+                    name="type"
+                    formControlName="type"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+                >
+                    <option value="" disabled selected>Seleccione un tipo</option>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="egreso">Egreso</option>
+                </select>
+                @if(movementForm.get('type')?.touched && movementForm.get('type')?.errors?.['required']){
+                    <span class="text-red-500 text-sm">El tipo es obligatorio</span>
+                }
+            </div>
+
+            <!-- Botón -->
+            <div class="flex justify-end gap-3">
+                <button
+                    type="submit"
+                    class="px-4 py-2 btn btn-primary"
+                    [disabled]="movementForm.invalid || !movementForm.dirty || loading()"
+                >
+                    @if(loading()){
+                        <span class="loading loading-spinner loading-sm"></span>
+                    }
+                    {{ data ? 'Actualizar' : 'Añadir' }} Movimiento
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
