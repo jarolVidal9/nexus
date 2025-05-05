@@ -4,6 +4,7 @@ import { Note } from './interfaces/note';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateEditNoteComponent } from './create-edit-note/create-edit-note.component';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-notes',
@@ -156,8 +157,28 @@ export class NotesComponent implements OnInit {
     }
   }
   deleteNote(note: Note, event: Event){
-    this.deleteNoteId.set(note.id);
     event.stopPropagation();
+    const dialogRef = this.dialog.open(ConfirmModalComponent,
+      {
+        data: {
+          title: 'Confirmar eliminación',
+          message: '¿Estás seguro de que deseas eliminar esta nota? Esta acción no se puede deshacer.',
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar'
+        },
+        width: '400px'
+      }
+    )
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.confirmDelete(note);
+      }
+    });
+    
+  }
+
+  confirmDelete(note: Note) {
+    this.deleteNoteId.set(note.id);
     this.notesService.deleteNote(note.id).subscribe({
       next: () => {
         this.deleteNoteId.set('');

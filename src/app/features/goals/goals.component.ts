@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateEditComponent } from './create-edit/create-edit.component';
 import { Goal } from './interfaces/goal';
 import { FilesService } from '../../core/services/files.service';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-goals',
@@ -131,6 +132,23 @@ export class GoalsComponent implements OnInit {
   
   deleteGoal(goalId: string, Event: MouseEvent){
     Event.stopPropagation();
+    const dialogRef = this.dialog.open(ConfirmModalComponent,
+      {
+        data: {
+          title: 'Eliminar meta',
+          message: '¿Estás seguro de que deseas eliminar esta meta?',
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar'
+        }
+      }
+    )
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.confirmDelete(goalId);
+      }
+    });
+  }
+  confirmDelete(goalId: string) {
     this.goalService.deleteGoal(goalId).subscribe({
       next: () => {
         this.categorysWithGoals.update((prev) => {
@@ -146,6 +164,7 @@ export class GoalsComponent implements OnInit {
       }
     });
   }
+
   editGoal(goal: Goal, categoryId: string) {
     const dialogRef = this.dialog.open(CreateEditComponent, {
       data: {
