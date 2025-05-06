@@ -1,59 +1,54 @@
 # Nexus
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+Aplicación desarrollada en **Angular 19** como proyecto personal para demostrar conocimientos adquiridos. Incluye autenticación JWT, recuperación de contraseña, registro de usuarios y módulos independientes con diversas funcionalidades.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🧩 Módulos principales
 
-```bash
-ng serve
-```
+- **🧾 Notas**  
+    Crea, edita, archiva y elimina notas. Clasifica con etiquetas y colores.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **💰 Finanzas**  
+    Registra ingresos y egresos, visualiza estadísticas básicas y organiza movimientos por categorías.
 
-## Code scaffolding
+- **🔐 Privado**  
+    Guarda información sensible (contraseñas, datos personales) de forma segura, con encriptado y control de visibilidad.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **🎯 Objetivos**  
+    Define metas personales, divídelas en pasos y sigue su progreso fácilmente.
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🚀 Cómo ejecutar el proyecto
 
-```bash
-ng generate --help
-```
+1. **Clona el repositorio:**
+        ```bash
+        git clone https://github.com/tu-usuario/nexus.git
+        cd nexus
+        ```
 
-## Building
+2. **Instala las dependencias:**
+        ```bash
+        npm install
+        ```
 
-To build the project run:
+3. **Inicia la aplicación Angular:**
+        ```bash
+        ng serve
+        ```
 
-```bash
-ng build
-```
+4. Abre [http://localhost:4200](http://localhost:4200) en tu navegador.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+> **Requisitos:**  
+> - [Node.js](https://nodejs.org/)  
+> - [Angular CLI](https://angular.io/cli)
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 🌐 Prueba la aplicación
 
-```bash
-ng test
-```
+Accede a la demo en:  
+[https://nexus9.netlify.app/](https://nexus9.netlify.app/)
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
